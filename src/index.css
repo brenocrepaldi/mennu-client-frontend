@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import 'tailwindcss';
+
+body {
+	font-family: 'Manrope', sans-serif;
+}
+
+@theme {
+	--color-app: oklch(0.577 0.245 27.325); /* tailwindcss red-600 */
+	--color-primary: #f4f5f7;
+	--color-secondary: #ffffff;
+
+	/* tailwindcss zinc palette */
+	--color-basic-50: #fafafa;
+	--color-basic-100: #f4f4f5;
+	--color-basic-200: #e4e4e7;
+	--color-basic-300: #d4d4d8;
+	--color-basic-400: #9f9fa9;
+	--color-basic-500: #71717b;
+	--color-basic-600: #52525c;
+	--color-basic-700: #3f3f46;
+	--color-basic-800: #27272a;
+	--color-basic-900: #18181b;
+	--color-basic-950: #09090b;
+
+	--shadow-basic: 0 -2px 5px rgba(0, 0, 0, 0.08);
+	--shadow-bottom: 0 4px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Hides the scrollbar */
+.scrollbar-hidden::-webkit-scrollbar {
+	display: none; /* Hides the scrollbar in Webkit-based browsers (Chrome, Safari) */
+}
+
+.scrollbar-hidden {
+	-ms-overflow-style: none; /* Hides the scrollbar in Internet Explorer 10+ */
+	scrollbar-width: none; /* Hides the scrollbar in Firefox */
+}
