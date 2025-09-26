@@ -40,6 +40,7 @@ export function AppRoutes() {
 			'/product',
 			'/restaurant',
 			'/bag',
+			'/category',
 			// '/calculate-delivery',
 		];
 		setShowFooterComponents(

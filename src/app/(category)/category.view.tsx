@@ -6,7 +6,7 @@ import { ProductList } from './components/product-list';
 type ProductDetailsViewProps = ReturnType<typeof useCategoryModel>;
 
 export function CategoryView(props: ProductDetailsViewProps) {
-	const { navigate, selectedCategory, productsOfSelectedCategory } = props;
+	const { navigate, selectedCategory, productsOfSelectedCategory, categories } = props;
 
 	// Show message if category is not found
 	if (!selectedCategory) {
@@ -34,6 +34,7 @@ export function CategoryView(props: ProductDetailsViewProps) {
 				navigate={navigate}
 				category={selectedCategory}
 				productsOfSelectedCategory={productsOfSelectedCategory}
+				categories={categories}
 			/>
 		</Page>
 	);

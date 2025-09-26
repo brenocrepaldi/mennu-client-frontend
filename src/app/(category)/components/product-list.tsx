@@ -5,11 +5,17 @@ interface MenuListProps {
 	category: string;
 	productsOfSelectedCategory: IProduct[];
 	navigate: NavigateFunction;
+	categories: string[];
 }
 
-export function ProductList({ category, productsOfSelectedCategory, navigate }: MenuListProps) {
+export function ProductList({
+	category,
+	productsOfSelectedCategory,
+	navigate,
+	categories,
+}: MenuListProps) {
 	return (
-		<div className="pb-24">
+		<>
 			<div id={category}>
 				<div>
 					{productsOfSelectedCategory.map((product) => (
@@ -38,6 +44,23 @@ export function ProductList({ category, productsOfSelectedCategory, navigate }: 
 					))}
 				</div>
 			</div>
-		</div>
+
+			{/* Categories Section */}
+			<div className="flex-1 px-4 bg-secondary pb-24 pt-8">
+				<h2 className="text-md font-bold text-basic-800 mb-4 pt-2">Outras categorias</h2>
+
+				<div className="flex flex-wrap gap-4">
+					{categories.map((category: string, index: number) => (
+						<button
+							key={index}
+							onClick={() => navigate(`/category/${category}`)}
+							className="bg-white rounded-full px-4 py-2 text-center border border-basic-200 hover:border-basic-300 transition-opacity duration-200 active:opacity-20 cursor-pointer"
+						>
+							<span className="text-basic-800 font-medium text-md">{category}</span>
+						</button>
+					))}
+				</div>
+			</div>
+		</>
 	);
 }
