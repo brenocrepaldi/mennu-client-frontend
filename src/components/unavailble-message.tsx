@@ -4,11 +4,13 @@ import { Page } from './page-template';
 interface UnavailableMessageProps {
 	pageHeaderLabel?: string;
 	pageHeaderReturnToPath?: string;
+	label?: string;
 }
 
 export function UnavailableMessage({
 	pageHeaderLabel,
 	pageHeaderReturnToPath,
+	label
 }: UnavailableMessageProps) {
 	return (
 		<Page
@@ -19,7 +21,7 @@ export function UnavailableMessage({
 				<div className="w-fit px-4 py-2 flex gap-2 items-center justify-center bg-basic-100 rounded-lg">
 					<CircleSlash className="text-basic-500 size-4" />
 					<span className="text-basic-500 font-semibold text-sm">
-						Indisponível
+						{label ? label : 'Indisponível'}
 					</span>
 				</div>
 			</div>

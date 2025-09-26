@@ -1,19 +1,4 @@
-import { IProduct } from '../../types';
-
 export const useMenuUtils = () => {
-	const categorizeMenuByCategory = (menu: IProduct[]) => {
-		return menu.reduce((acc, item) => {
-			// Initialize category if it doesn't exist
-			if (!acc[item.category]) {
-				acc[item.category] = [];
-			}
-
-			// Add product to the corresponding category
-			acc[item.category].push(item);
-			return acc;
-		}, {} as Record<string, IProduct[]>);
-	};
-
 	const scrollToCategory = (category: string) => {
 		// Find the category button and container for horizontal scroll
 		const categoryButton = document.getElementById(`${category}-button`);
@@ -43,5 +28,5 @@ export const useMenuUtils = () => {
 		}
 	};
 
-	return { categorizeMenuByCategory, scrollToCategory };
+	return { scrollToCategory };
 };

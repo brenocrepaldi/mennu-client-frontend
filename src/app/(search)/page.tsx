@@ -1,3 +1,7 @@
+import { useSearchModel } from './search.model';
+import { SearchView } from './search.view';
+
 export function Search() {
-	return <div>Search</div>;
+	const methods = useSearchModel();
+	return <SearchView {...methods} />;
 }
