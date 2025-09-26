@@ -8,9 +8,6 @@ export const useSearchModel = () => {
 	const { restaurant, isOpen } = useRestaurantStore();
 	const categories = getAllCategories(restaurant.menu);
 	const categorizedItems = categorizeItems(restaurant.menu);
-	const [selectedCategory, setSelectedCategory] = useState<string>(
-		restaurant.menu[0]?.category || ''
-	);
 
 	const MAX_SEARCH_LENGTH = 200;
 	const [searchText, setSearchText] = useState<string>('');
@@ -23,10 +20,8 @@ export const useSearchModel = () => {
 	return {
 		navigate,
 		isOpen,
-    categories,
+		categories,
 		categorizedItems,
-		selectedCategory,
-		setSelectedCategory,
 		searchText,
 		MAX_SEARCH_LENGTH,
 		setSearchText,

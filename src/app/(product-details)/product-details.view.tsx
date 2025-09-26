@@ -35,7 +35,6 @@ export function ProductDetailsView(props: ProductDetailsViewProps) {
 	return (
 		<Page
 			pageHeaderLabel={isEditMode ? 'Editar Produto' : 'Detalhes do Produto'}
-			pageHeaderReturnToPath={!isEditMode ? '/menu' : undefined}
 		>
 			{/* Product image */}
 			<img className="w-full h-60 object-cover" src={product.image} alt="Product Image" />

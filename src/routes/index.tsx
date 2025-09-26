@@ -14,6 +14,7 @@ import { ProductDetailsPage } from '../app/(product-details)/page';
 import { Profile } from '../app/(profile)/page';
 import { RestaurantDetailsPage } from '../app/(restaurant-details)/page';
 import { Search } from '../app/(search)/page';
+import { CategoryPage } from '../app/(category)/page';
 
 // Routes
 const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
@@ -23,10 +24,11 @@ const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
 	'/product/:id/edit': { component: <ProductDetailsPage /> },
 	// '/calculate-delivery': { component: <DeliveryFeeCalculator />, up: true },
 	'/restaurant/:id': { component: <RestaurantDetailsPage /> },
+	'/search': { component: <Search /> },
+	'/category/:id': { component: <CategoryPage /> },
 	'/bag': { component: <BagPage /> },
 	'/orders': { component: <Orders /> },
 	'/profile': { component: <Profile /> },
-	'/search': { component: <Search /> },
 };
 
 export function AppRoutes() {
