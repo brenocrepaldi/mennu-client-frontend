@@ -9,7 +9,7 @@ import { PageTransition } from '../components/page-transition';
 // Pages
 import { BagPage } from '../app/(bag)/page';
 import { MenuPage } from '../app/(menu)/page';
-import { Orders } from '../app/(orders)/page';
+import { OrdersPage } from '../app/(orders)/page';
 import { ProductDetailsPage } from '../app/(product-details)/page';
 import { Profile } from '../app/(profile)/page';
 import { RestaurantDetailsPage } from '../app/(restaurant-details)/page';
@@ -27,7 +27,7 @@ const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
 	'/search': { component: <Search /> },
 	'/category/:id': { component: <CategoryPage /> },
 	'/bag': { component: <BagPage /> },
-	'/orders': { component: <Orders /> },
+	'/orders': { component: <OrdersPage /> },
 	'/profile': { component: <Profile /> },
 };
 
