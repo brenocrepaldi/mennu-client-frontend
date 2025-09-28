@@ -24,7 +24,7 @@ export function BagItemCard({
 	deleteItemFromBag,
 }: BagItemProps) {
 	return (
-		<li key={item.id} className="flex flex-col">
+		<div key={item.id} className="flex flex-col">
 			<div className="flex items-start justify-between py-3">
 				{/* Product Image */}
 				<div className="relative">
@@ -100,6 +100,6 @@ export function BagItemCard({
 					</button>
 				</div>
 			</div>
-		</li>
+		</div>
 	);
 }
