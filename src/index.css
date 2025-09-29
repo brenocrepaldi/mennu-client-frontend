@@ -36,3 +36,15 @@ body {
 	-ms-overflow-style: none; /* Hides the scrollbar in Internet Explorer 10+ */
 	scrollbar-width: none; /* Hides the scrollbar in Firefox */
 }
+
+/* Animation for sliding down */
+@keyframes slideDown {
+	from {
+		transform: translateY(-8px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}

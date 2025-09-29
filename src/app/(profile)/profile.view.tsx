@@ -5,7 +5,7 @@ import { Mail } from 'lucide-react';
 type ProfileViewProps = ReturnType<typeof useProfileModel>;
 
 export function ProfileView(props: ProfileViewProps) {
-	const { restaurant, GoogleSvg } = props;
+	const { navigate, restaurant, GoogleSvg } = props;
 	return (
 		<Page pageHeaderLabel="Entrar" pageHeaderReturnToPath="/menu" className="flex flex-col">
 			<div className="w-full bg-secondary flex flex-col items-center gap-6 px-4 py-6 text-center shadow-bottom">
@@ -30,13 +30,16 @@ export function ProfileView(props: ProfileViewProps) {
 
 				<div className="w-full flex flex-col gap-3">
 					{/* Email Login Button */}
-					<button className="w-full bg-app font-medium px-6 py-3 rounded-lg hover:opacity-90 transition-opacity duration-200 active:opacity-70 flex items-center justify-center gap-3">
+					<button
+						className="w-full bg-app font-medium px-6 py-3 rounded-lg hover:opacity-90 transition-opacity duration-200 active:opacity-70 flex items-center justify-center gap-3 cursor-pointer"
+						onClick={() => navigate('/login')}
+					>
 						<Mail className="text-secondary size-5 stroke-2" />
 						<span className="text-secondary font-bold flex-1">Continuar com e-mail</span>
 					</button>
 
 					{/* Google Login Button */}
-					<button className="w-full bg-white border border-basic-300 font-medium px-6 py-3 rounded-lg hover:bg-basic-50 transition-colors duration-200 active:opacity-70 flex items-center justify-center gap-3">
+					<button className="w-full bg-white border border-basic-300 font-medium px-6 py-3 rounded-lg hover:bg-basic-50 transition-colors duration-200 active:opacity-70 flex items-center justify-center gap-3 cursor-pointer">
 						<GoogleSvg />
 						<span className="text-basic-700 font-semibold flex-1">Continuar com Google</span>
 					</button>

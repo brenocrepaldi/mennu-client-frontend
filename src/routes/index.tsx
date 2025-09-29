@@ -15,6 +15,7 @@ import { ProfilePage } from '../app/(profile)/page';
 import { RestaurantDetailsPage } from '../app/(restaurant-details)/page';
 import { Search } from '../app/(search)/page';
 import { CategoryPage } from '../app/(category)/page';
+import { LoginPage } from '../app/(login)/page';
 
 // Routes
 const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
@@ -29,6 +30,7 @@ const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
 	'/bag': { component: <BagPage /> },
 	'/orders': { component: <OrdersPage /> },
 	'/profile': { component: <ProfilePage /> },
+	'/login': { component: <LoginPage /> },
 };
 
 export function AppRoutes() {
@@ -36,16 +38,9 @@ export function AppRoutes() {
 	const [showFooterComponents, setShowFooterComponents] = useState(true);
 
 	useEffect(() => {
-		const hideComponentRoutes = [
-			'/product',
-			'/restaurant',
-			'/bag',
-			'/category',
-			// '/calculate-delivery',
-		];
-		setShowFooterComponents(
-			!hideComponentRoutes.some((path) => location.pathname.startsWith(path))
-		);
+		const routesWithFooter = ['/', '/menu', '/search', '/orders', '/profile'];
+
+		setShowFooterComponents(routesWithFooter.includes(location.pathname));
 	}, [location]);
 
 	return (
