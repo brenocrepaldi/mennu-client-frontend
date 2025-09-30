@@ -90,10 +90,10 @@ export function RegisterView(props: RegisterViewProps) {
 					<button
 						type="submit"
 						disabled={!canRegister}
-						className={`w-full font-semibold px-6 py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-3 bg-app ${
+						className={`w-full px-6 py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-3 ${
 							canRegister
-								? 'text-secondary cursor-pointer hover:opacity-90 active:opacity-70'
-								: 'text-basic-500 cursor-not-allowed'
+								? 'bg-app cursor-pointer hover:opacity-90 active:opacity-70'
+								: 'bg-basic-300 cursor-not-allowed'
 						}`}
 					>
 						{isLoading ? (
@@ -102,7 +102,7 @@ export function RegisterView(props: RegisterViewProps) {
 								<span className="text-secondary font-semibold">Cadastrando...</span>
 							</>
 						) : (
-							'Cadastrar-se'
+							<span className="text-secondary font-semibold">Cadastrar-se</span>
 						)}
 					</button>
 				</form>

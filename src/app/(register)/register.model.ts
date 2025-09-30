@@ -85,8 +85,7 @@ export const useRegisterModel = () => {
 		isRegisterFormValid.isEmailValid &&
 		isRegisterFormValid.isPasswordValid &&
 		isRegisterFormValid.isPasswordConfirmValid &&
-		isRegisterFormValid.doPasswordsMatch &&
-		!isLoading;
+		isRegisterFormValid.doPasswordsMatch;
 
 	async function handleResgistration(event: React.FormEvent) {
 		event.preventDefault();
