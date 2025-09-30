@@ -13,7 +13,7 @@ import { OrdersPage } from '../app/(orders)/page';
 import { ProductDetailsPage } from '../app/(product-details)/page';
 import { ProfilePage } from '../app/(profile)/page';
 import { RestaurantDetailsPage } from '../app/(restaurant-details)/page';
-import { Search } from '../app/(search)/page';
+import { SearchPage } from '../app/(search)/page';
 import { CategoryPage } from '../app/(category)/page';
 import { LoginPage } from '../app/(login)/page';
 import { RegisterPage } from '../app/(register)/page';
@@ -27,7 +27,7 @@ const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
 	'/product/:id/edit': { component: <ProductDetailsPage /> },
 	// '/calculate-delivery': { component: <DeliveryFeeCalculator />, up: true },
 	'/restaurant/:id': { component: <RestaurantDetailsPage /> },
-	'/search': { component: <Search /> },
+	'/search': { component: <SearchPage /> },
 	'/category/:id': { component: <CategoryPage /> },
 	'/bag': { component: <BagPage /> },
 	'/orders': { component: <OrdersPage /> },
