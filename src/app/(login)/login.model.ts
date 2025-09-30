@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRestaurantStore } from '../../store/restaurantStore';
-import { useState } from 'react';
-import { useLoginUtils } from './login.utils';
+import { useRegexValidations } from '../../utils/regexValidations';
 
 type LoginForm = {
 	email: string;
@@ -16,7 +16,7 @@ type LoginFormValidity = {
 export const useLoginModel = () => {
 	const navigate = useNavigate();
 	const { restaurant } = useRestaurantStore();
-	const { emailRegex, passwordRegex } = useLoginUtils();
+	const { emailRegex, passwordRegex } = useRegexValidations();
 	const [loginForm, setLoginForm] = useState<LoginForm>({
 		email: '',
 		password: '',

@@ -16,6 +16,7 @@ import { RestaurantDetailsPage } from '../app/(restaurant-details)/page';
 import { Search } from '../app/(search)/page';
 import { CategoryPage } from '../app/(category)/page';
 import { LoginPage } from '../app/(login)/page';
+import { RegisterPage } from '../app/(register)/page';
 
 // Routes
 const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
@@ -31,6 +32,7 @@ const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
 	'/orders': { component: <OrdersPage /> },
 	'/profile': { component: <ProfilePage /> },
 	'/login': { component: <LoginPage /> },
+	'/register': { component: <RegisterPage /> },
 };
 
 export function AppRoutes() {

@@ -35,7 +35,7 @@ export function LoginView(props: LoginViewwProps) {
 					</span>
 				</div>
 
-				<form className="w-full flex flex-col gap-4" onSubmit={handleLogin}>
+				<form action="submit" className="w-full flex flex-col gap-4" onSubmit={handleLogin}>
 					<div>
 						<input
 							type="text"
