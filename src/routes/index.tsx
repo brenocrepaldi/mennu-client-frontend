@@ -8,19 +8,21 @@ import { PageTransition } from '../components/page-transition';
 
 // Pages
 import { BagPage } from '../app/(bag)/page';
+import { CategoryPage } from '../app/(category)/page';
+import { LoginPage } from '../app/(login)/page';
 import { MenuPage } from '../app/(menu)/page';
+import { NotFoundPage } from '../app/(not-found)/page';
 import { OrdersPage } from '../app/(orders)/page';
 import { ProductDetailsPage } from '../app/(product-details)/page';
 import { ProfilePage } from '../app/(profile)/page';
+import { RegisterPage } from '../app/(register)/page';
 import { RestaurantDetailsPage } from '../app/(restaurant-details)/page';
 import { SearchPage } from '../app/(search)/page';
-import { CategoryPage } from '../app/(category)/page';
-import { LoginPage } from '../app/(login)/page';
-import { RegisterPage } from '../app/(register)/page';
 import { SuccessPage } from '../app/(success)/page';
 
 // Routes
 const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
+	'*': { component: <NotFoundPage /> },
 	'/': { component: <MenuPage /> },
 	'/menu': { component: <MenuPage /> },
 	'/product/:id': { component: <ProductDetailsPage /> },
