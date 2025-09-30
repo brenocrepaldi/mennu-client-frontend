@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import { useRestaurantStore } from '../../store/restaurantStore';
 import { useRegexValidations } from '../../utils/regexValidations';
 
@@ -16,7 +17,7 @@ type LoginFormValidity = {
 export const useLoginModel = () => {
 	const navigate = useNavigate();
 	const { restaurant } = useRestaurantStore();
-	const { emailRegex, passwordRegex } = useRegexValidations();
+	const { emailRegex } = useRegexValidations();
 	const [loginForm, setLoginForm] = useState<LoginForm>({
 		email: '',
 		password: '',
@@ -25,6 +26,7 @@ export const useLoginModel = () => {
 		isEmailValid: false,
 		isPasswordValid: false,
 	});
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleFormChange =
 		(field: keyof LoginForm) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,17 +37,40 @@ export const useLoginModel = () => {
 			setIsLoginFormValid((prev) => ({
 				...prev,
 				[field === 'email' ? 'isEmailValid' : 'isPasswordValid']:
-					field === 'email' ? emailRegex.test(value) : passwordRegex.test(value),
+					field === 'email' ? emailRegex.test(value) : value !== '',
 			}));
 		};
 
 	const canLogin = isLoginFormValid.isEmailValid && isLoginFormValid.isPasswordValid;
 
-	function handleLogin(event: React.FormEvent) {
+	async function handleLogin(event: React.FormEvent) {
 		event.preventDefault();
-		if (canLogin) {
-			// Handle form submission logic - future implementation
-			console.log('Form submitted:', loginForm);
+		if (!canLogin) return;
+
+		setIsLoading(true);
+
+		try {
+			// const response = await fetch('/api/login', {
+			// 	method: 'POST',
+			// 	headers: {
+			// 		'Content-Type': 'application/json',
+			// 	},
+			// 	body: JSON.stringify(loginForm),
+			// });
+
+			await new Promise((resolve) => setTimeout(resolve, 1500));
+
+			toast.success('Login realizado com sucesso!');
+			console.log('Login successful:', loginForm);
+
+			// Aqui você pode salvar o token, redirecionar, etc.
+			// navigate('/menu');
+		} catch (error) {
+			console.error('Login error:', error);
+			toast.error('Erro de conexão. Verifique sua internet e tente novamente');
+		} finally {
+			setIsLoading(false);
+			navigate('/login/success');
 		}
 	}
 
@@ -57,5 +82,6 @@ export const useLoginModel = () => {
 		isLoginFormValid,
 		canLogin,
 		handleLogin,
+		isLoading,
 	};
 };

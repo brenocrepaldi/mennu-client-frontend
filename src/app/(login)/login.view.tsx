@@ -2,6 +2,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Page } from '../../components/page-template';
 import { cn } from '../../utils/cn';
 import { useLoginModel } from './login.model';
+import { Input } from '../../components/ui/input';
 
 type LoginViewwProps = ReturnType<typeof useLoginModel>;
 
@@ -14,6 +15,7 @@ export function LoginView(props: LoginViewwProps) {
 		isLoginFormValid,
 		canLogin,
 		handleLogin,
+		isLoading,
 	} = props;
 
 	return (
@@ -36,51 +38,22 @@ export function LoginView(props: LoginViewwProps) {
 				</div>
 
 				<form action="submit" className="w-full flex flex-col gap-4" onSubmit={handleLogin}>
-					<div>
-						<input
-							type="text"
-							placeholder="E-mail"
-							value={loginForm.email}
-							onChange={handleFormChange('email')}
-							className={cn(
-								`flex items-center gap-4 w-full rounded-sm border text-left align-top py-2 px-4 bg-secondary transition-colors duration-200 font-medium placeholder:font-medium placeholder:text-md outline-none`,
-								isLoginFormValid.isEmailValid
-									? 'focus-within:border-basic-800 border-basic-200 text-basic-800 placeholder:text-basic-400'
-									: loginForm.email.length > 0 &&
-											'focus-within:border-red-500 border-red-500 text-red-500'
-							)}
-						/>
-						<div className="overflow-hidden">
-							{!isLoginFormValid.isEmailValid && loginForm.email.length > 0 && (
-								<p className="text-sm text-red-500 mt-2 text-left transform transition-all duration-300 ease-out translate-y-0 opacity-100 animate-[slideDown_0.3s_ease-out]">
-									Informe seu e-mail
-								</p>
-							)}
-						</div>
-					</div>
+					<Input
+						type="email"
+						placeholder="E-mail"
+						inputValue={loginForm.email}
+						handleInputChange={handleFormChange('email')}
+						isValid={isLoginFormValid.isEmailValid}
+						errorMessage="Informe seu e-mail"
+					/>
 
-					<div>
-						<input
-							type="text"
-							placeholder="Senha"
-							value={loginForm.password}
-							onChange={handleFormChange('password')}
-							className={cn(
-								`flex items-center gap-4 w-full rounded-sm border text-left align-top py-2 px-4 bg-secondary transition-colors duration-200 font-medium placeholder:font-medium placeholder:text-md outline-none `,
-								isLoginFormValid.isPasswordValid
-									? 'focus-within:border-basic-800 border-basic-200 text-basic-800 placeholder:text-basic-400'
-									: loginForm.password.length > 0 &&
-											'focus-within:border-red-500 border-red-500 text-red-500'
-							)}
-						/>
-						<div className="overflow-hidden">
-							{!isLoginFormValid.isPasswordValid && loginForm.password.length > 0 && (
-								<p className="text-sm text-red-500 mt-2 text-left transform transition-all duration-300 ease-out translate-y-0 opacity-100 animate-[slideDown_0.3s_ease-out]">
-									A senha deve ter ao menos 6 caracteres
-								</p>
-							)}
-						</div>
-					</div>
+					<Input
+						type="password"
+						placeholder="Senha"
+						inputValue={loginForm.password}
+						handleInputChange={handleFormChange('password')}
+						isValid={isLoginFormValid.isPasswordValid}
+					/>
 
 					<div className="flex flex-col gap-3">
 						<button
@@ -92,7 +65,14 @@ export function LoginView(props: LoginViewwProps) {
 							)}
 							disabled={!canLogin}
 						>
-							<span className="text-secondary font-semibold flex-1">Continuar</span>
+							{isLoading ? (
+								<>
+									<div className="w-5 h-5 border-3 border-secondary border-t-transparent rounded-full animate-spin" />
+									<span className="text-secondary font-semibold">Entrando...</span>
+								</>
+							) : (
+								<span className="text-secondary font-semibold flex-1">Continuar</span>
+							)}
 						</button>
 
 						<span className="text-sm text-basic-500">
