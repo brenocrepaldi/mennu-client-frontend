@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import { useRestaurantStore } from '../../store/restaurantStore';
 import { useRegexValidations } from '../../utils/regexValidations';
 import { useState } from 'react';
@@ -35,6 +36,7 @@ export const useRegisterModel = () => {
 		isPasswordConfirmValid: false,
 		doPasswordsMatch: false,
 	});
+	const [isLoading, setIsLoading] = useState(false);
 
 	const normalizeName = (name: string): string => {
 		return name.trim().replace(/\s+/g, ' ');
@@ -83,19 +85,41 @@ export const useRegisterModel = () => {
 		isRegisterFormValid.isEmailValid &&
 		isRegisterFormValid.isPasswordValid &&
 		isRegisterFormValid.isPasswordConfirmValid &&
-		isRegisterFormValid.doPasswordsMatch;
+		isRegisterFormValid.doPasswordsMatch &&
+		!isLoading;
 
-	function handleResgistration(event: React.FormEvent) {
+	async function handleResgistration(event: React.FormEvent) {
 		event.preventDefault();
-		if (canRegister) {
-			const registrationData = {
-				name: normalizeName(registerForm.name),
-				email: registerForm.email.trim(),
-				password: registerForm.password,
-			};
+		if (!canRegister) return;
 
-			// Handle form submission logic - future implementation
-			console.log('Form submitted:', registrationData);
+		setIsLoading(true);
+
+		const registrationData = {
+			name: normalizeName(registerForm.name),
+			email: registerForm.email.trim(),
+			password: registerForm.password,
+		};
+
+		try {
+			// Simular chamada à API
+			// const response = await fetch('/api/register', {
+			// 	method: 'POST',
+			// 	headers: {
+			// 		'Content-Type': 'application/json',
+			// 	},
+			// 	body: JSON.stringify(registrationData),
+			// });
+
+			await new Promise((resolve) => setTimeout(resolve, 1500));
+
+			toast.success('Conta criada com sucesso!');
+			console.log('Registration successful:', registrationData);
+		} catch (error) {
+			console.error('Registration error:', error);
+			toast.error('Erro de conexão. Verifique sua internet e tente novamente');
+		} finally {
+			setIsLoading(false);
+			navigate('/register/success');
 		}
 	}
 
@@ -107,5 +131,6 @@ export const useRegisterModel = () => {
 		handleResgistration,
 		isRegisterFormValid,
 		canRegister,
+		isLoading,
 	};
 };

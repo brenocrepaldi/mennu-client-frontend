@@ -14,6 +14,7 @@ export function RegisterView(props: RegisterViewProps) {
 		handleResgistration,
 		isRegisterFormValid,
 		canRegister,
+		isLoading,
 	} = props;
 
 	return (
@@ -89,13 +90,20 @@ export function RegisterView(props: RegisterViewProps) {
 					<button
 						type="submit"
 						disabled={!canRegister}
-						className={`w-full font-semibold px-6 py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-3 ${
+						className={`w-full font-semibold px-6 py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-3 bg-app ${
 							canRegister
-								? 'bg-app text-secondary cursor-pointer hover:opacity-90 active:opacity-70'
-								: 'bg-basic-200 text-basic-500 cursor-not-allowed'
+								? 'text-secondary cursor-pointer hover:opacity-90 active:opacity-70'
+								: 'text-basic-500 cursor-not-allowed'
 						}`}
 					>
-						Cadastrar-se
+						{isLoading ? (
+							<>
+								<div className="w-5 h-5 border-2 border-secondary border-t-transparent rounded-full animate-spin" />
+								<span className="text-secondary font-semibold">Cadastrando...</span>
+							</>
+						) : (
+							'Cadastrar-se'
+						)}
 					</button>
 				</form>
 			</div>
