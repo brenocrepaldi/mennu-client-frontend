@@ -1,4 +1,5 @@
 import { UUIDTypes } from 'uuid';
+import { IProduct } from './restaurant';
 
 // Bag-related data structures
 
