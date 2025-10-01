@@ -1,5 +1,5 @@
 import { NavigateFunction } from 'react-router-dom';
-import { IBagItem } from '../../../types';
+import { IBagItem } from '../../../types/restaurant';
 import { BagItemCard } from './bag-item-card';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';

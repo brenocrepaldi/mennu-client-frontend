@@ -1,4 +1,4 @@
-import { IRestaurant } from '../../../types';
+import { IRestaurant } from '../../../types/restaurant';
 
 interface RestaurantInfoProps {
 	restaurant: IRestaurant;

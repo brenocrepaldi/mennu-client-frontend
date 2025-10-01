@@ -1,5 +1,5 @@
 import { Minus, Plus } from 'lucide-react';
-import { IProduct } from '../../../types';
+import { IProduct } from '../../../types/restaurant';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface ProductFooterProps {

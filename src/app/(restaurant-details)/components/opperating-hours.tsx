@@ -1,5 +1,5 @@
 import { Clock3 } from 'lucide-react';
-import { IOperatingHours, IRestaurant } from '../../../types';
+import { IOperatingHours, IRestaurant } from '../../../types/restaurant';
 
 interface OperatingHoursProps {
 	restaurant: IRestaurant;

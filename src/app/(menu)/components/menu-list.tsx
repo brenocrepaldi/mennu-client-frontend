@@ -1,5 +1,5 @@
 import { NavigateFunction } from 'react-router-dom';
-import { IProduct } from '../../../types';
+import { IProduct } from '../../../types/restaurant';
 
 interface MenuListProps {
 	categorizedMenu: Record<string, IProduct[]>;

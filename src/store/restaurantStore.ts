@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { restaurant as mockRestaurant } from '../mocks/restaurant';
-import { IRestaurant } from '../types';
+import { IRestaurant } from '../types/restaurant';
 import { isRestaurantOpen } from '../utils/restaurantUtils';
 
 // Define the Zustand store interface

@@ -1,5 +1,5 @@
 import { CircleDollarSign } from 'lucide-react';
-import { IRestaurant } from '../../../types';
+import { IRestaurant } from '../../../types/restaurant';
 
 interface PaymentMethodsProps {
 	restaurant: IRestaurant;

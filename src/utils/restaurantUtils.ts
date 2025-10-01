@@ -1,4 +1,4 @@
-import { IOperatingHours, IProduct } from '../types';
+import { IOperatingHours, IProduct } from '../types/restaurant';
 
 /**
  * Determines if a restaurant is currently open based on its operating hours.

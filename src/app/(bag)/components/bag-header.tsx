@@ -1,5 +1,5 @@
 import { NavigateFunction } from 'react-router-dom';
-import { IRestaurant } from '../../../types';
+import { IRestaurant } from '../../../types/restaurant';
 
 interface BagHeaderProps {
 	navigate: NavigateFunction;

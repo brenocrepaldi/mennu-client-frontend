@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { IBagItem, IBagState } from '../types';
+import { IBagItem, IBagState } from '../types/restaurant';
 import { UUIDTypes } from 'uuid';
 
 // Creates the store for managing the shopping bag's state

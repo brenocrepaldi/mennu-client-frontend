@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { IProduct, IRestaurant } from '../../types';
+import { IProduct, IRestaurant } from '../../types/restaurant';
 
 export const useSearchUtils = () => {
 	// Normalize text for better search matching

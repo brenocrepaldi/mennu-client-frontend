@@ -1,6 +1,6 @@
 import { ChevronRight, CircleDollarSign, Clock3, MapPinIcon } from 'lucide-react';
 import { NavigateFunction } from 'react-router-dom';
-import { IRestaurant } from '../../../types';
+import { IRestaurant } from '../../../types/restaurant';
 import { RestaurantStatusStyle } from '../menu.type';
 
 interface RestaurantHeaderProps {

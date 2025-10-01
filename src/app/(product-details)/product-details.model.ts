@@ -3,7 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useBagStore } from '../../store/bagStore';
 import { IRestaurantStore, useRestaurantStore } from '../../store/restaurantStore';
-import { IBagItem, IProduct } from '../../types';
+import { IBagItem, IProduct } from '../../types/restaurant';
 
 export const useProductDetailsModel = () => {
 	// Constants

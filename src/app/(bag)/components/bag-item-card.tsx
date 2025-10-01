@@ -2,7 +2,7 @@ import { Minus, Pencil, Plus, Trash } from 'lucide-react';
 import { NavigateFunction } from 'react-router-dom';
 import { toast } from 'sonner';
 import { UUIDTypes } from 'uuid';
-import { IBagItem } from '../../../types';
+import { IBagItem } from '../../../types/restaurant';
 
 const MAX_PRODUCT_ORDER = 100;
 
