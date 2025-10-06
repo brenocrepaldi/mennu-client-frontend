@@ -19,7 +19,7 @@ export function Page({
 }: PageProps) {
 	return (
 		<div
-			className={cn(`min-h-dvh min-w-dvw`, bgSecondary ? 'bg-secondary' : 'bg-primary', className)}
+			className={cn(`min-h-dvh min-w-dvw flex flex-col`, bgSecondary ? 'bg-secondary' : 'bg-primary', className)}
 		>
 			{pageHeaderLabel && (
 				<PageHeader label={pageHeaderLabel} returnToPath={pageHeaderReturnToPath} />

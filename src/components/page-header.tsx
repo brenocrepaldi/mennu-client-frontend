@@ -15,7 +15,7 @@ export function PageHeader({ label, returnToPath }: PageHeaderProps) {
 	};
 
 	return (
-		<div className="w-dvw bg-secondary flex items-center justify-center py-4 border-b-1 border-basic-200 z-10">
+		<div className="w-dvw bg-secondary flex items-center justify-center py-4 border-b-1 border-basic-200 z-10 relative">
 			<ChevronLeft
 				className="size-6 text-basic-800 absolute left-3"
 				onClick={handleGoBack}
