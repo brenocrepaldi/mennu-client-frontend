@@ -19,11 +19,12 @@ import { RegisterPage } from '../app/(register)/page';
 import { RestaurantDetailsPage } from '../app/(restaurant-details)/page';
 import { SearchPage } from '../app/(search)/page';
 import { SuccessPage } from '../app/(success)/page';
+import { HomePage } from '../app/(home)/page';
 
 // Routes
 const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
 	'*': { component: <NotFoundPage /> },
-	'/': { component: <MenuPage /> },
+	'/': { component: <HomePage /> },
 	'/menu': { component: <MenuPage /> },
 	'/product/:id': { component: <ProductDetailsPage /> },
 	'/product/:id/edit': { component: <ProductDetailsPage /> },
@@ -45,7 +46,7 @@ export function AppRoutes() {
 	const [showFooterComponents, setShowFooterComponents] = useState(true);
 
 	useEffect(() => {
-		const routesWithFooter = ['/', '/menu', '/search', '/orders', '/profile'];
+		const routesWithFooter = ['/menu', '/search', '/orders', '/profile'];
 
 		setShowFooterComponents(routesWithFooter.includes(location.pathname));
 	}, [location]);

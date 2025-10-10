@@ -1,19 +1,16 @@
-import { ChevronRight, CircleDollarSign, Clock3, MapPinIcon } from 'lucide-react';
+import { ChevronRight, CircleDollarSign } from 'lucide-react';
 import { NavigateFunction } from 'react-router-dom';
 import { IRestaurant } from '../../../types/restaurant';
-import { RestaurantStatusStyle } from '../menu.type';
+import { AddressBadge } from '../../../components/address-badge';
+import { StatusBadge } from '../../../components/status-badge';
 
 interface RestaurantHeaderProps {
 	restaurant: IRestaurant;
 	navigate: NavigateFunction;
-	restaurantStatusStyle: RestaurantStatusStyle;
+	isOpen: boolean;
 }
 
-export function RestaurantHeader({
-	restaurant,
-	navigate,
-	restaurantStatusStyle,
-}: RestaurantHeaderProps) {
+export function RestaurantHeader({ restaurant, navigate, isOpen }: RestaurantHeaderProps) {
 	return (
 		<div className="relative w-full mb-5">
 			{/* Imagem de Capa */}
@@ -50,22 +47,10 @@ export function RestaurantHeader({
 						<div className="space-y-2">
 							<div className="w-full flex gap-2 overflow-x-auto whitespace-nowrap">
 								{/* Endereço */}
-								<div className="flex items-center w-fit gap-1 bg-basic-100 rounded-full px-4 py-1">
-									<MapPinIcon className="size-4 text-basic-500" />
-									<span className="text-basic-500 text-[0.775rem] font-semibold">
-										{restaurant.address.city} - {restaurant.address.state}
-									</span>
-								</div>
+								<AddressBadge address={restaurant.address} />
 
 								{/* Status */}
-								<div
-									className={`flex items-center w-fit gap-1 border-[1.5px] rounded-full px-4 py-1 ${restaurantStatusStyle.border}`}
-								>
-									<Clock3 className={`size-4 ${restaurantStatusStyle.color}`} />
-									<span className={`text-[0.775rem] font-semibold ${restaurantStatusStyle.color}`}>
-										{restaurantStatusStyle.label}
-									</span>
-								</div>
+								<StatusBadge isOpen={isOpen} />
 							</div>
 
 							{/* Taxa de Entrega */}

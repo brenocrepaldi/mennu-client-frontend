@@ -10,21 +10,17 @@ export function MenuView(props: MenuViewProps) {
 	const {
 		navigate,
 		restaurant,
+		isOpen,
 		selectedCategory,
 		categorizedMenu,
 		handleCategorySelect,
-		restaurantStatusStyle,
 		capitalize,
 	} = props;
 
 	return (
 		<Page>
 			{/* Cabeçalho do Restaurante */}
-			<RestaurantHeader
-				restaurant={restaurant}
-				navigate={navigate}
-				restaurantStatusStyle={restaurantStatusStyle}
-			/>
+			<RestaurantHeader restaurant={restaurant} navigate={navigate} isOpen={isOpen} />
 
 			{/* Lista de Categorias */}
 			<CategoryList
