@@ -6,37 +6,23 @@ import { useProfileModel } from './profile.model';
 type ProfileViewProps = ReturnType<typeof useProfileModel>;
 
 export function ProfileView(props: ProfileViewProps) {
-	const {
-		navigate,
-		user,
-		restaurant,
-		isOpen,
-		GoogleSvg,
-		handleLogout,
-		handleMyProfile,
-		handleMyAddresses,
-	} = props;
+	const { navigate, user, restaurant, isOpen, GoogleSvg, handleLogout, getUserNameInitials } =
+		props;
 
 	if (!user)
 		return <NotLoggedIn navigate={navigate} restaurant={restaurant} GoogleSvg={GoogleSvg} />;
 
 	return (
-		<Page bgSecondary pageHeaderLabel="Perfil" pageHeaderReturnToPath="/menu">
-			<div className="flex-1 flex flex-col justify-between px-4 py-6">
+		<Page bgSecondary pageHeaderLabel={'Perfil'} pageHeaderReturnToPath={'/menu'}>
+			<div className="flex-1 flex flex-col justify-between gap-12 px-4 py-6">
 				<div className="flex flex-col gap-6">
 					<div className="bg-white rounded-lg shadow-sm border border-basic-100 p-4">
 						<div className="flex items-center gap-4">
 							<div className="w-16 h-16 bg-basic-100 rounded-full flex items-center justify-center border border-basic-200">
 								<span className="text-basic-700 font-semibold text-lg">
-									{user.name
-										.split(' ')
-										.map((n) => n[0])
-										.join('')
-										.substring(0, 2)
-										.toUpperCase()}
+									{getUserNameInitials(user.name)}
 								</span>
 							</div>
-							{/* Informações do usuário */}
 							<div className="flex-1">
 								<div className="flex flex-col gap-1">
 									<h1 className="text-basic-800 font-bold text-xl leading-tight">{user.name}</h1>
@@ -52,7 +38,7 @@ export function ProfileView(props: ProfileViewProps) {
 					<div className="flex-1">
 						<div className="bg-white rounded-lg shadow-sm overflow-hidden border border-basic-100">
 							<button
-								onClick={handleMyProfile}
+								onClick={() => navigate('/profile/details')}
 								className="w-full flex items-center justify-between p-4 hover:bg-basic-50 transition-colors duration-200 active:bg-basic-100 border-b border-basic-100"
 							>
 								<div className="flex items-center gap-3">
@@ -62,7 +48,7 @@ export function ProfileView(props: ProfileViewProps) {
 								<ChevronRight className="w-5 h-5 text-basic-400" />
 							</button>
 							<button
-								onClick={handleMyAddresses}
+								onClick={() => navigate('/profile/addresses')}
 								className="w-full flex items-center justify-between p-4 hover:bg-basic-50 transition-colors duration-200 active:bg-basic-100"
 							>
 								<div className="flex items-center gap-3">
@@ -114,16 +100,17 @@ export function ProfileView(props: ProfileViewProps) {
 							</div>
 						</div>
 					</div>
-					<div className="space-y-1">
+
+					<div>
 						<button
 							onClick={handleLogout}
 							className="w-full flex items-center justify-center gap-3 py-3 px-6 bg-white hover:bg-red-50 active:bg-red-100 rounded-lg transition-colors duration-200 border border-basic-200 hover:border-red-200"
 						>
 							<LogOut className="w-5 h-5 text-red-600" />
-							<span className="text-red-600 font-medium">Sair</span>
+							<span className="text-red-600 font-medium">Sair da conta</span>
 						</button>
 						<div className="pb-16 text-center">
-							<span className="text-basic-400 text-xs">
+							<span className="text-basic-400 text-[0.65rem]">
 								Seu cadastro é válido em qualquer restaurante que utilize nosso sistema.
 							</span>
 						</div>

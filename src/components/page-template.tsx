@@ -6,6 +6,7 @@ interface PageProps {
 	children: ReactNode;
 	pageHeaderLabel?: string;
 	pageHeaderReturnToPath?: string;
+	pageHeaderOnBack?: () => void;
 	bgSecondary?: boolean;
 	className?: string;
 }
@@ -14,6 +15,7 @@ export function Page({
 	children,
 	pageHeaderLabel,
 	pageHeaderReturnToPath,
+	pageHeaderOnBack,
 	bgSecondary = false,
 	className,
 }: PageProps) {
@@ -22,7 +24,11 @@ export function Page({
 			className={cn(`min-h-dvh min-w-dvw flex flex-col`, bgSecondary ? 'bg-secondary' : 'bg-primary', className)}
 		>
 			{pageHeaderLabel && (
-				<PageHeader label={pageHeaderLabel} returnToPath={pageHeaderReturnToPath} />
+				<PageHeader 
+					label={pageHeaderLabel} 
+					returnToPath={pageHeaderReturnToPath}
+					onBack={pageHeaderOnBack}
+				/>
 			)}
 
 			{children}

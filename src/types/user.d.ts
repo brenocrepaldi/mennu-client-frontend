@@ -12,3 +12,13 @@ type UserRole =
 	| 'ESTABLISHMENT_ADMIN' // Establishment (local)
 	| 'ESTABLISHMENT_USER' // User (local employee)
 	| 'CUSTOMER'; // User (consuming customer)
+
+export interface IUserAddress {
+	id: number;
+	type: 'Casa' | 'Trabalho' | 'Outro';
+	icon: React.ReactNode; // Icon component
+	address: string;
+	neighborhood: string;
+	city: string;
+	zipCode: string;
+}

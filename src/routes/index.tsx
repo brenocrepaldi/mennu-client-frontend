@@ -15,11 +15,13 @@ import { NotFoundPage } from '../app/(not-found)/page';
 import { OrdersPage } from '../app/(orders)/page';
 import { ProductDetailsPage } from '../app/(product-details)/page';
 import { ProfilePage } from '../app/(profile)/page';
+import { ProfileDetailsPage } from '../app/(profile-details)/page';
 import { RegisterPage } from '../app/(register)/page';
 import { RestaurantDetailsPage } from '../app/(restaurant-details)/page';
 import { SearchPage } from '../app/(search)/page';
 import { SuccessPage } from '../app/(success)/page';
 import { HomePage } from '../app/(home)/page';
+import { ProfileAddressesPage } from '../app/(profile-addresses)/page';
 
 // Routes
 const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
@@ -35,6 +37,8 @@ const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
 	'/bag': { component: <BagPage /> },
 	'/orders': { component: <OrdersPage /> },
 	'/profile': { component: <ProfilePage /> },
+	'/profile/details': { component: <ProfileDetailsPage /> },
+	'/profile/addresses': { component: <ProfileAddressesPage /> },
 	'/login': { component: <LoginPage /> },
 	'/login/success': { component: <SuccessPage /> },
 	'/register': { component: <RegisterPage /> },

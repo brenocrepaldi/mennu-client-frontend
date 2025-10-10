@@ -4,14 +4,20 @@ import { useNavigate } from 'react-router-dom';
 interface PageHeaderProps {
 	label: string;
 	returnToPath?: string;
+	onBack?: () => void;
 }
 
-export function PageHeader({ label, returnToPath }: PageHeaderProps) {
+export function PageHeader({ label, returnToPath, onBack }: PageHeaderProps) {
 	const navigate = useNavigate();
 
 	const handleGoBack = () => {
-		if (returnToPath) navigate(returnToPath);
-		else navigate(-1);
+		if (onBack) {
+			onBack();
+		} else if (returnToPath) {
+			navigate(returnToPath);
+		} else {
+			navigate(-1);
+		}
 	};
 
 	return (
