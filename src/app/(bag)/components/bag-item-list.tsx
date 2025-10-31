@@ -1,9 +1,9 @@
 import { NavigateFunction } from 'react-router-dom';
-import { IBagItem } from '../../../types/restaurant';
 import { BagItemCard } from './bag-item-card';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { UUIDTypes } from 'uuid';
+import { IBagItem } from '../../../types/bag';
 
 interface BagItemListProps {
 	navigate: NavigateFunction;
