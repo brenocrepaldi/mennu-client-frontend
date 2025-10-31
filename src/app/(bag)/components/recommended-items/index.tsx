@@ -1,4 +1,5 @@
-import { IBagItem, IRestaurant } from '../../../../types/restaurant';
+import { IBagItem } from '../../../../types/bag';
+import { IRestaurant } from '../../../../types/restaurant';
 import { useRecommendedItemsModel } from './recommended-items.model';
 import { RecommendedItemsView } from './recommended-items.view';
 

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { IBagItem, IProduct, IRestaurant } from '../../../../types/restaurant';
+import { IProduct, IRestaurant } from '../../../../types/restaurant';
+import { IBagItem } from '../../../../types/bag';
 
 export const useRecommendedItemsModel = ({
 	bag,
