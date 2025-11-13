@@ -18,6 +18,9 @@ export interface IUserAddress {
 	type: 'Casa' | 'Trabalho' | 'Outro';
 	icon: React.ReactNode; // Icon component
 	address: string;
+	street: string;
+	number: string;
+	complement?: string;
 	neighborhood: string;
 	city: string;
 	zipCode: string;

@@ -8,7 +8,7 @@ interface CheckoutProps {
 	selectedAddress: IUserAddress;
 	totalPrice: number;
 	deliveryFee: number;
-	onConfirmOrder: () => void;
+	onConfirmOrder: (paymentMethod: string, changeFor?: number, discount?: number) => void;
 }
 
 type PaymentMethod = 'credit-card' | 'debit-card' | 'pix' | 'cash';
@@ -34,7 +34,11 @@ export function Checkout({
 		setIsLoading(true);
 		// Simular processamento do pedido
 		await new Promise((resolve) => setTimeout(resolve, 2000));
-		onConfirmOrder();
+		onConfirmOrder(
+			selectedPayment, 
+			selectedPayment === 'cash' && changeFor ? parseFloat(changeFor) : undefined,
+			discount
+		);
 	};
 
 	const paymentMethods = [

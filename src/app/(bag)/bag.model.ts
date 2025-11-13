@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useBagStore } from '../../store/bagStore';
 import { useRestaurantStore } from '../../store/restaurantStore';
+import { useOrdersStore } from '@/store/ordersStore';
 import { useMockUser } from '../../hooks/useMockUser';
 import { mockAddresses } from '../../mocks/user';
+import { IOrder, PaymentMethod } from '@/types/order';
 import { toast } from 'sonner';
 
 export const useBagModel = () => {
@@ -55,10 +57,42 @@ export const useBagModel = () => {
 		}, 0);
 	};
 
-	const handleConfirmOrder = () => {
+	const { addOrder } = useOrdersStore();
+
+	const handleConfirmOrder = (paymentMethod: string, changeFor?: number, discount: number = 0) => {
+		const selectedAddress = mockAddresses.find((addr) => addr.id === selectedAddressId);
+
+		if (!selectedAddress) {
+			toast.error('Endereço não encontrado');
+			return;
+		}
+
+		// Criar o pedido
+		const newOrder: IOrder = {
+			id: String(Date.now()),
+			orderNumber: `#${Math.floor(1000 + Math.random() * 9000)}`,
+			items: bag.map((item) => ({ ...item })),
+			status: 'pending',
+			subtotal: totalPrice,
+			deliveryFee: 8.0,
+			discount: discount,
+			total: totalPrice + 8.0 - discount,
+			paymentMethod: paymentMethod as PaymentMethod,
+			changeFor: changeFor,
+			deliveryAddress: selectedAddress,
+			estimatedTime: '40-50 min',
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			restaurant: {
+				name: restaurant?.name || 'Restaurante',
+				image: restaurant?.logo || '/assets/logo-restaurante.png',
+			},
+		};
+
+		addOrder(newOrder);
 		toast.success('Pedido confirmado!');
-		navigate('/orders');
 		clearBag();
+		navigate('/orders');
 	};
 
 	const showFooter = currentStep !== 'checkout';
