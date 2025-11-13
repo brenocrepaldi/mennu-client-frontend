@@ -1,11 +1,12 @@
 import { Page } from '../../components/page-template';
 import { BagFooter } from './components/bag-footer';
-import { BagHeader } from './components/bag-header';
-import { BagItemList } from './components/bag-item-list';
-import { OrderSummary } from './components/order-summary';
-import { RecommendedItems } from './components/recommended-items';
 import { EmptyBag } from './components/empty-bag';
 import { useBagModel } from './bag.model';
+import { ChoseProducts } from './components/steps/chose-products';
+import { PageTransition } from '../../components/page-transition';
+import { AnimatePresence } from 'framer-motion';
+import { ConfirmAddress } from './components/steps/confirm-address';
+import { Checkout } from './components/steps/checkout';
 
 type BagViewProps = ReturnType<typeof useBagModel>;
 
@@ -21,36 +22,70 @@ export function BagView(props: BagViewProps) {
 		removeItemFromBag,
 		deleteItemFromBag,
 		clearBag,
+		handleOnBack,
+		currentStep,
+		handleStepChange,
+		mockAddresses,
+		selectedAddressId,
+		handleConfirmOrder,
+		showFooter,
+		navDirection,
 	} = props;
 
 	if (!bag.length) return <EmptyBag />;
 
 	return (
-		<Page pageHeaderLabel="Sacola" bgSecondary={true}>
-			<div className="px-3 pb-22">
-				{/* Header */}
-				<BagHeader navigate={navigate} restaurant={restaurant} />
-
-				{/* Item List */}
-				<BagItemList
-					navigate={navigate}
-					bag={bag}
-					getTotalItemsCount={getTotalItemsCount}
-					addItemToBag={addItemToBag}
-					removeItemFromBag={removeItemFromBag}
-					deleteItemFromBag={deleteItemFromBag}
-					clearBag={clearBag}
-				/>
-
-				{/* Also Order Section */}
-				<RecommendedItems restaurant={restaurant} bag={bag} addItemToBag={addItemToBag} />
-
-				{/* Resumo do pedido */}
-				<OrderSummary totalPrice={totalPrice} />
+		<Page pageHeaderLabel="Sacola" bgSecondary={true} pageHeaderOnBack={handleOnBack}>
+			<div className="px-3 pb-22 relative overflow-hidden">
+				<AnimatePresence mode="wait" initial={false}>
+					{currentStep === 'chose-products' ? (
+						<PageTransition key="chose-products" direction={navDirection}>
+							<ChoseProducts
+								addItemToBag={addItemToBag}
+								bag={bag}
+								clearBag={clearBag}
+								deleteItemFromBag={deleteItemFromBag}
+								getTotalItemsCount={getTotalItemsCount}
+								navigate={navigate}
+								restaurant={restaurant}
+								removeItemFromBag={removeItemFromBag}
+								totalPrice={totalPrice}
+							/>
+						</PageTransition>
+					) : currentStep === 'confirm-address' ? (
+						<PageTransition key="confirm-address" direction={navDirection}>
+							<ConfirmAddress
+								mockAddresses={mockAddresses}
+								selectedAddressId={selectedAddressId}
+								deliveryFee={restaurant?.delivery.fee}
+							/>
+						</PageTransition>
+					) : (
+						<PageTransition key="checkout" direction={navDirection}>
+							<Checkout
+								bag={bag}
+								selectedAddress={
+									mockAddresses.find((a) => a.id === selectedAddressId) || mockAddresses[0]
+								}
+								totalPrice={totalPrice}
+								deliveryFee={restaurant?.delivery.fee || 0}
+								onConfirmOrder={handleConfirmOrder}
+							/>
+						</PageTransition>
+					)}
+				</AnimatePresence>
 			</div>
 
-			{/* Footer */}
-			<BagFooter navigate={navigate} totalItemsCount={totalItemsCount} totalPrice={totalPrice} />
+			{/* Footer - Only show on first two steps */}
+			{showFooter && (
+				<BagFooter
+					totalItemsCount={totalItemsCount}
+					totalPrice={totalPrice}
+					deliveryFee={restaurant?.delivery.fee || 0}
+					currentStep={currentStep}
+					handleStepChange={handleStepChange}
+				/>
+			)}
 		</Page>
 	);
 }

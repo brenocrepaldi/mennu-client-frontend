@@ -1,17 +1,22 @@
 import { ShoppingBag } from 'lucide-react';
-import { NavigateFunction } from 'react-router-dom';
 
 interface BagFooterProps {
-	navigate: NavigateFunction;
 	totalItemsCount: number;
 	totalPrice: number;
+	deliveryFee: number;
+	currentStep: 'chose-products' | 'confirm-address' | 'checkout';
+	handleStepChange: () => void;
 }
 
 export function BagFooter({
-	navigate,
 	totalItemsCount,
 	totalPrice,
+	deliveryFee,
+	currentStep,
+	handleStepChange,
 }: BagFooterProps) {
+	const totalWithDelivery = totalPrice + deliveryFee;
+	const buttonText = currentStep === 'chose-products' ? 'Continuar' : 'Ir para pagamento';
 	return (
 		<div className="bg-secondary fixed bottom-0 w-full h-14 px-4 shadow-basic">
 			<div className="h-full flex items-center justify-between">
@@ -30,16 +35,16 @@ export function BagFooter({
 						</span>
 						<div className="flex gap-1">
 							<span className="font-semibold text-basic-800">
-								{`R$ ${totalPrice.toFixed(2).replace('.', ',')}`}
+								{`R$ ${totalWithDelivery.toFixed(2).replace('.', ',')}`}
 							</span>
 						</div>
 					</div>
 				</div>
 				<button
-					onClick={() => navigate('/bag')}
+					onClick={() => handleStepChange()}
 					className="bg-app px-10 py-2 rounded-lg transition-opacity duration-200 active:opacity-50 cursor-pointer"
 				>
-					<span className="text-sm font-bold text-basic-50">Continuar</span>
+					<span className="text-sm font-bold text-basic-50">{buttonText}</span>
 				</button>
 			</div>
 		</div>

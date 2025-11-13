@@ -59,11 +59,11 @@ export function AppRoutes() {
 		<>
 			<AnimatePresence mode="wait">
 				<Routes location={location} key={location.pathname}>
-					{Object.entries(routes).map(([path, { component, up }]) => (
+					{Object.entries(routes).map(([path, { component }]) => (
 						<Route
 							key={path}
 							path={path}
-							element={<PageTransition up={!!up}>{component}</PageTransition>}
+							element={<PageTransition>{component}</PageTransition>}
 						/>
 					))}
 				</Routes>

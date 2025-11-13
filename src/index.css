@@ -23,6 +23,12 @@ body {
 	--color-basic-900: #18181b;
 	--color-basic-950: #09090b;
 
+	/* warning/alert colors (amber/yellow) */
+	--color-warning-50: #fffbeb;
+	--color-warning-100: #fef3c7;
+	--color-warning-200: #fde68a;
+	--color-warning-700: #b45309;
+
 	--shadow-basic: 0 -2px 5px rgba(0, 0, 0, 0.08);
 	--shadow-bottom: 0 4px 6px rgba(0, 0, 0, 0.08);
 }
