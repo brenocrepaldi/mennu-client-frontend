@@ -5,6 +5,7 @@ import { OrderCard } from './components/order-card';
 import { OrderStatusTracker } from './components/order-status-tracker';
 import { OrderItemsList, OrderDetailsInfo } from './components/order-details';
 import { PageTransition } from '@/components/page-transition';
+import { AnimatePresence } from 'framer-motion';
 
 type OrdersViewProps = ReturnType<typeof useOrdersModel>;
 
@@ -14,52 +15,39 @@ export function OrdersView(props: OrdersViewProps) {
 		activeOrders,
 		historyOrders,
 		selectedOrder,
+		navDirection,
 		handleSelectOrder,
 		handleBackToList,
 	} = props;
 
 	if (!hasOrders) return <NoOrder />;
 
-	// Visualização de detalhes do pedido
-	if (selectedOrder) {
-		return (
-			<Page
-				pageHeaderLabel={`Pedido ${selectedOrder.orderNumber}`}
-				pageHeaderReturnToPath="/orders"
-				pageHeaderOnBack={handleBackToList}
-			>
-				<PageTransition direction="forward">
-					<div className="flex-1 pb-6 space-y-6">
-						{/* Status do pedido */}
-						<div className="bg-white rounded-lg p-4 shadow-sm">
-							<OrderStatusTracker
-								status={selectedOrder.status}
-								estimatedTime={selectedOrder.estimatedTime}
-								createdAt={selectedOrder.createdAt}
-							/>
-						</div>
-
-						{/* Itens do pedido */}
-						<div className="bg-white rounded-lg p-4 shadow-sm">
-							<OrderItemsList items={selectedOrder.items} />
-						</div>
-
-						{/* Informações de entrega e pagamento */}
-						<div className="bg-white rounded-lg p-4 shadow-sm">
-							<OrderDetailsInfo order={selectedOrder} />
-						</div>
+	const renderContent = () => {
+		if (selectedOrder) {
+			return (
+				<>
+					{/* Status do pedido */}
+					<div className="bg-white rounded-2xl p-5 shadow-sm">
+						<OrderStatusTracker
+							status={selectedOrder.status}
+							estimatedTime={selectedOrder.estimatedTime}
+							createdAt={selectedOrder.createdAt}
+						/>
 					</div>
-				</PageTransition>
-			</Page>
-		);
-	}
-
-	// Visualização da lista de pedidos
-	return (
-		<Page pageHeaderLabel="Meus Pedidos" pageHeaderReturnToPath="/menu" bgSecondary>
-			<PageTransition>
-				<div className="flex-1 px-4 py-6 space-y-6">
-					{/* Pedidos em andamento */}
+					{/* Itens do pedido */}
+					<div className="bg-white rounded-2xl p-5 shadow-sm">
+						<OrderItemsList items={selectedOrder.items} />
+					</div>
+					{/* Informações de entrega e pagamento */}
+					<div className="bg-white rounded-2xl p-5 shadow-sm">
+						<OrderDetailsInfo order={selectedOrder} />
+					</div>
+				</>
+			);
+		} else {
+			return (
+				<>
+					{/* Orders in progress */}
 					{activeOrders.length > 0 && (
 						<div>
 							<div className="mb-4">
@@ -81,7 +69,7 @@ export function OrdersView(props: OrdersViewProps) {
 						</div>
 					)}
 
-					{/* Histórico de pedidos */}
+					{/* Order history */}
 					<div>
 						<div className="mb-4">
 							<h2 className="text-xl font-bold text-basic-800">Histórico</h2>
@@ -124,8 +112,26 @@ export function OrdersView(props: OrdersViewProps) {
 							</div>
 						)}
 					</div>
-				</div>
-			</PageTransition>
+				</>
+			);
+		}
+	};
+
+	// View order list
+	return (
+		<Page
+			pageHeaderLabel={selectedOrder ? `Pedido #${selectedOrder.id}` : 'Meus Pedidos'}
+			pageHeaderReturnToPath="/menu"
+			pageHeaderOnBack={selectedOrder ? handleBackToList : undefined}
+			bgSecondary
+		>
+			<div className="flex-1 px-4 py-6 space-y-6">
+				<AnimatePresence mode="wait" initial={false}>
+					<PageTransition key={selectedOrder ? selectedOrder.id : 'list'} direction={navDirection}>
+						{renderContent()}
+					</PageTransition>
+				</AnimatePresence>
+			</div>
 		</Page>
 	);
 }

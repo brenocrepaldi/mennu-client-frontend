@@ -7,33 +7,43 @@ interface OrderItemsListProps {
 
 export function OrderItemsList({ items }: OrderItemsListProps) {
 	return (
-		<div className="space-y-3">
-			<h3 className="font-semibold text-basic-800">Itens do Pedido</h3>
-			<div className="space-y-2">
+		<div className="space-y-4">
+			<div>
+				<h3 className="text-lg font-bold text-basic-800 mb-1">Itens do Pedido</h3>
+				<p className="text-sm text-basic-600">
+					{items.length} {items.length === 1 ? 'item' : 'itens'}
+				</p>
+			</div>
+			<div className="space-y-3">
 				{items.map((item) => (
-					<div key={item.uuid} className="flex gap-3 py-2">
-						<img 
-							src={item.image} 
+					<div key={item.uuid} className="flex gap-4 p-3 bg-basic-50 rounded-xl">
+						<img
+							src={item.image}
 							alt={item.name}
-							className="w-16 h-16 object-cover rounded-lg"
+							className="w-20 h-20 object-cover rounded-xl flex-shrink-0"
 						/>
-						<div className="flex-1">
-							<div className="flex justify-between items-start">
-								<div>
-									<p className="font-medium text-basic-800">{item.name}</p>
-									<p className="text-sm text-basic-600">
-										Quantidade: {item.quantity}
-									</p>
-									{item.observation && (
-										<p className="text-xs text-basic-500 mt-1">
-											Obs: {item.observation}
-										</p>
-									)}
-								</div>
-								<p className="font-semibold text-basic-800">
-									R$ {(item.price * item.quantity).toFixed(2)}
-								</p>
+						<div className="flex-1 min-w-0">
+							<div className="flex justify-between items-start gap-3 mb-2">
+								<h4 className="font-bold text-basic-800 text-[15px] leading-tight">{item.name}</h4>
+								<span className="font-bold text-basic-800 text-[15px] whitespace-nowrap">
+									R$ {(item.price * item.quantity).toFixed(2).replace('.', ',')}
+								</span>
 							</div>
+							<div className="flex items-center gap-2 mb-1">
+								<span className="text-sm text-basic-600">Quantidade:</span>
+								<span className="text-sm font-semibold text-basic-700">{item.quantity}x</span>
+								<span className="text-basic-400">•</span>
+								<span className="text-sm text-basic-600">
+									R$ {item.price.toFixed(2).replace('.', ',')} cada
+								</span>
+							</div>
+							{item.observation && (
+								<div className="mt-2 bg-yellow-50 border border-yellow-200 rounded-lg px-3 py-2">
+									<p className="text-xs text-yellow-800">
+										<span className="font-semibold">Observação:</span> {item.observation}
+									</p>
+								</div>
+							)}
 						</div>
 					</div>
 				))}
@@ -50,101 +60,114 @@ export function OrderDetailsInfo({ order }: OrderDetailsInfoProps) {
 	const paymentMethodLabels = {
 		'credit-card': 'Cartão de Crédito',
 		'debit-card': 'Cartão de Débito',
-		'pix': 'PIX',
-		'cash': 'Dinheiro'
+		pix: 'PIX',
+		cash: 'Dinheiro',
 	};
 
 	return (
-		<div className="space-y-4">
-			{/* Endereço de entrega */}
-			<div className="bg-basic-50 rounded-lg p-4">
-				<div className="flex items-start gap-3">
-					<MapPin size={20} className="text-basic-600 mt-0.5 flex-shrink-0" />
-					<div>
-						<h4 className="font-semibold text-basic-800 mb-1">
-							Endereço de Entrega
-						</h4>
-						<p className="text-sm text-basic-700">
-							{order.deliveryAddress.street}, {order.deliveryAddress.number}
-						</p>
-						{order.deliveryAddress.complement && (
-							<p className="text-sm text-basic-600">
-								{order.deliveryAddress.complement}
-							</p>
-						)}
-						<p className="text-sm text-basic-600">
-							{order.deliveryAddress.neighborhood} - {order.deliveryAddress.city}
-						</p>
-						<p className="text-sm text-basic-600">
-							CEP: {order.deliveryAddress.zipCode}
-						</p>
-					</div>
-				</div>
-			</div>
+		<div className="space-y-5">
+			<div>
+				<h3 className="text-lg font-bold text-basic-800 mb-4">Informações da Entrega</h3>
 
-			{/* Método de pagamento */}
-			<div className="bg-basic-50 rounded-lg p-4">
-				<div className="flex items-start gap-3">
-					{order.paymentMethod === 'cash' ? (
-						<Wallet size={20} className="text-basic-600 mt-0.5 flex-shrink-0" />
-					) : (
-						<CreditCard size={20} className="text-basic-600 mt-0.5 flex-shrink-0" />
-					)}
-					<div>
-						<h4 className="font-semibold text-basic-800 mb-1">
-							Pagamento
-						</h4>
-						<p className="text-sm text-basic-700">
-							{paymentMethodLabels[order.paymentMethod]}
-						</p>
-						{order.paymentMethod === 'cash' && order.changeFor && (
-							<p className="text-sm text-basic-600">
-								Troco para: R$ {order.changeFor.toFixed(2)}
+				{/* Endereço de entrega */}
+				<div className="bg-basic-50 rounded-xl p-4 mb-3">
+					<div className="flex gap-3">
+						<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+							<MapPin size={20} className="text-app" />
+						</div>
+						<div className="flex-1">
+							<h4 className="font-bold text-basic-800 mb-2 text-[15px]">Endereço de Entrega</h4>
+							<p className="text-[15px] text-basic-800 font-medium leading-relaxed">
+								{order.deliveryAddress.street}, {order.deliveryAddress.number}
 							</p>
-						)}
-						<p className="text-xs text-basic-500 mt-1">
-							Pagamento na entrega
-						</p>
-					</div>
-				</div>
-			</div>
-
-			{/* Tempo estimado */}
-			{order.status !== 'delivered' && order.status !== 'cancelled' && (
-				<div className="bg-basic-50 rounded-lg p-4">
-					<div className="flex items-start gap-3">
-						<Clock size={20} className="text-basic-600 mt-0.5 flex-shrink-0" />
-						<div>
-							<h4 className="font-semibold text-basic-800 mb-1">
-								Tempo Estimado
-							</h4>
-							<p className="text-sm text-basic-700">
-								{order.estimatedTime}
+							{order.deliveryAddress.complement && (
+								<p className="text-sm text-basic-600 leading-relaxed">
+									{order.deliveryAddress.complement}
+								</p>
+							)}
+							<p className="text-sm text-basic-600 leading-relaxed">
+								{order.deliveryAddress.neighborhood} - {order.deliveryAddress.city}
 							</p>
+							<p className="text-sm text-basic-500 mt-1">CEP {order.deliveryAddress.zipCode}</p>
 						</div>
 					</div>
 				</div>
-			)}
 
-			{/* Resumo de valores */}
-			<div className="border-t pt-4 space-y-2">
-				<div className="flex justify-between text-basic-700">
-					<span>Subtotal</span>
-					<span>R$ {order.subtotal.toFixed(2)}</span>
-				</div>
-				<div className="flex justify-between text-basic-700">
-					<span>Taxa de Entrega</span>
-					<span>R$ {order.deliveryFee.toFixed(2)}</span>
-				</div>
-				{order.discount > 0 && (
-					<div className="flex justify-between text-green-600">
-						<span>Desconto</span>
-						<span>- R$ {order.discount.toFixed(2)}</span>
+				{/* Tempo estimado */}
+				{order.status !== 'delivered' && order.status !== 'cancelled' && (
+					<div className="bg-green-50 border border-green-200 rounded-xl p-4">
+						<div className="flex gap-3">
+							<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+								<Clock size={20} className="text-green-700" />
+							</div>
+							<div className="flex-1">
+								<h4 className="font-bold text-green-800 mb-1 text-[15px]">
+									Tempo Estimado de Entrega
+								</h4>
+								<p className="text-[15px] text-green-700 font-semibold">{order.estimatedTime}</p>
+							</div>
+						</div>
 					</div>
 				)}
-				<div className="flex justify-between text-lg font-bold text-basic-800 pt-2 border-t">
-					<span>Total</span>
-					<span>R$ {order.total.toFixed(2)}</span>
+			</div>
+
+			{/* Método de pagamento */}
+			<div>
+				<h3 className="text-lg font-bold text-basic-800 mb-4">Pagamento</h3>
+				<div className="bg-basic-50 rounded-xl p-4">
+					<div className="flex gap-3">
+						<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+							{order.paymentMethod === 'cash' ? (
+								<Wallet size={20} className="text-app" />
+							) : (
+								<CreditCard size={20} className="text-app" />
+							)}
+						</div>
+						<div className="flex-1">
+							<h4 className="font-bold text-basic-800 mb-2 text-[15px]">
+								{paymentMethodLabels[order.paymentMethod]}
+							</h4>
+							<p className="text-sm text-basic-600">Pagamento na entrega</p>
+							{order.paymentMethod === 'cash' && order.changeFor && (
+								<p className="text-sm text-basic-700 font-medium mt-1">
+									Troco para R$ {order.changeFor.toFixed(2).replace('.', ',')}
+								</p>
+							)}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			{/* Resumo de valores */}
+			<div>
+				<h3 className="text-lg font-bold text-basic-800 mb-4">Resumo do Pedido</h3>
+				<div className="bg-basic-50 rounded-xl p-4 space-y-3">
+					<div className="flex justify-between text-[15px]">
+						<span className="text-basic-600">Subtotal</span>
+						<span className="font-semibold text-basic-800">
+							R$ {order.subtotal.toFixed(2).replace('.', ',')}
+						</span>
+					</div>
+					<div className="flex justify-between text-[15px]">
+						<span className="text-basic-600">Taxa de Entrega</span>
+						<span className="font-semibold text-basic-800">
+							R$ {order.deliveryFee.toFixed(2).replace('.', ',')}
+						</span>
+					</div>
+					{order.discount > 0 && (
+						<div className="flex justify-between text-[15px]">
+							<span className="text-green-600">Desconto</span>
+							<span className="font-semibold text-green-600">
+								- R$ {order.discount.toFixed(2).replace('.', ',')}
+							</span>
+						</div>
+					)}
+					<div className="border-t border-basic-200 pt-3 mt-3 flex justify-between">
+						<span className="text-lg font-bold text-basic-800">Total</span>
+						<span className="text-lg font-bold text-basic-800">
+							R$ {order.total.toFixed(2).replace('.', ',')}
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
