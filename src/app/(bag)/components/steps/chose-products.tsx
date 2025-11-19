@@ -11,6 +11,7 @@ interface ChoseProductsProps {
 	navigate: NavigateFunction;
 	restaurant: IRestaurant;
 	bag: IBagItem[];
+	deliveryFee: number;
 	totalPrice: number;
 	getTotalItemsCount: () => number;
 	addItemToBag: (item: IBagItem) => void;
@@ -50,7 +51,7 @@ export function ChoseProducts({
 			<RecommendedItems restaurant={restaurant} bag={bag} addItemToBag={addItemToBag} />
 
 			{/* Resumo do pedido */}
-			<OrderSummary totalPrice={totalPrice} />
+			<OrderSummary totalPrice={totalPrice} deliveryFee={restaurant.delivery.fee} />
 		</>
 	);
 }

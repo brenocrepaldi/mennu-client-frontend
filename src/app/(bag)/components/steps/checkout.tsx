@@ -35,7 +35,7 @@ export function Checkout({
 		// Simular processamento do pedido
 		await new Promise((resolve) => setTimeout(resolve, 2000));
 		onConfirmOrder(
-			selectedPayment, 
+			selectedPayment,
 			selectedPayment === 'cash' && changeFor ? parseFloat(changeFor) : undefined,
 			discount
 		);
@@ -57,7 +57,7 @@ export function Checkout({
 	};
 
 	return (
-		<div className="pt-6 space-y-6 pb-6">
+		<div className="pt-6 space-y-6">
 			{/* Header */}
 			<div>
 				<h2 className="text-lg font-bold text-basic-800">Finalizar pedido</h2>
@@ -101,54 +101,6 @@ export function Checkout({
 						</div>
 					))}
 				</div>
-			</div>
-
-			{/* Coupon Section */}
-			<div className="bg-white rounded-lg border border-basic-200 p-4">
-				<div className="flex items-center gap-2 mb-3">
-					<Tag className="w-4 h-4 text-basic-600" />
-					<h3 className="text-sm font-bold text-basic-800">Cupom de desconto</h3>
-				</div>
-				{!appliedCoupon ? (
-					<div className="flex gap-2">
-						<input
-							type="text"
-							value={couponCode}
-							onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
-							placeholder="Digite o código"
-							className="flex-1 px-3 py-2 text-sm border border-basic-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
-						/>
-						<button
-							onClick={handleApplyCoupon}
-							disabled={!couponCode}
-							className="px-4 py-2 bg-app text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
-						>
-							Aplicar
-						</button>
-					</div>
-				) : (
-					<div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-lg p-3">
-						<div className="flex items-center gap-2">
-							<div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
-								<Tag className="w-4 h-4 text-emerald-700" />
-							</div>
-							<div>
-								<p className="text-sm font-semibold text-emerald-700">{couponCode}</p>
-								<p className="text-xs text-emerald-600">Desconto aplicado</p>
-							</div>
-						</div>
-						<button
-							onClick={() => {
-								setAppliedCoupon(false);
-								setCouponCode('');
-								setDiscount(0);
-							}}
-							className="text-xs text-emerald-700 font-medium hover:opacity-80"
-						>
-							Remover
-						</button>
-					</div>
-				)}
 			</div>
 
 			{/* Payment Methods */}
@@ -221,6 +173,54 @@ export function Checkout({
 								O valor deve ser maior ou igual ao total do pedido
 							</p>
 						)}
+					</div>
+				)}
+			</div>
+
+			{/* Coupon Section */}
+			<div className="bg-white rounded-lg border border-basic-200 p-4">
+				<div className="flex items-center gap-2 mb-3">
+					<Tag className="w-4 h-4 text-basic-600" />
+					<h3 className="text-sm font-bold text-basic-800">Cupom de desconto</h3>
+				</div>
+				{!appliedCoupon ? (
+					<div className="flex gap-2">
+						<input
+							type="text"
+							value={couponCode}
+							onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+							placeholder="Digite o código"
+							className="flex-1 px-3 py-2 text-sm border border-basic-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
+						/>
+						<button
+							onClick={handleApplyCoupon}
+							disabled={!couponCode}
+							className="px-4 py-2 bg-app text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+						>
+							Aplicar
+						</button>
+					</div>
+				) : (
+					<div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-lg p-3">
+						<div className="flex items-center gap-2">
+							<div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+								<Tag className="w-4 h-4 text-emerald-700" />
+							</div>
+							<div>
+								<p className="text-sm font-semibold text-emerald-700">{couponCode}</p>
+								<p className="text-xs text-emerald-600">Desconto aplicado</p>
+							</div>
+						</div>
+						<button
+							onClick={() => {
+								setAppliedCoupon(false);
+								setCouponCode('');
+								setDiscount(0);
+							}}
+							className="text-xs text-emerald-700 font-medium hover:opacity-80"
+						>
+							Remover
+						</button>
 					</div>
 				)}
 			</div>

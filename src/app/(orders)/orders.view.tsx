@@ -25,12 +25,11 @@ export function OrdersView(props: OrdersViewProps) {
 	const renderContent = () => {
 		if (selectedOrder) {
 			return (
-				<>
+				<div className="space-y-6">
 					{/* Status do pedido */}
 					<div className="bg-white rounded-2xl p-5 shadow-sm">
 						<OrderStatusTracker
 							status={selectedOrder.status}
-							estimatedTime={selectedOrder.estimatedTime}
 							createdAt={selectedOrder.createdAt}
 						/>
 					</div>
@@ -42,11 +41,11 @@ export function OrdersView(props: OrdersViewProps) {
 					<div className="bg-white rounded-2xl p-5 shadow-sm">
 						<OrderDetailsInfo order={selectedOrder} />
 					</div>
-				</>
+				</div>
 			);
 		} else {
 			return (
-				<>
+				<div className='space-y-12'>
 					{/* Orders in progress */}
 					{activeOrders.length > 0 && (
 						<div>
@@ -69,8 +68,10 @@ export function OrdersView(props: OrdersViewProps) {
 						</div>
 					)}
 
+					<div className='w-full h-[1px] bg-basic-200 rounded-2xl'/>
+
 					{/* Order history */}
-					<div>
+					<div className='spcece-y-6'>
 						<div className="mb-4">
 							<h2 className="text-xl font-bold text-basic-800">Histórico</h2>
 							<p className="text-sm text-basic-600 mt-1">
@@ -112,7 +113,7 @@ export function OrdersView(props: OrdersViewProps) {
 							</div>
 						)}
 					</div>
-				</>
+				</div>
 			);
 		}
 	};
@@ -120,12 +121,12 @@ export function OrdersView(props: OrdersViewProps) {
 	// View order list
 	return (
 		<Page
-			pageHeaderLabel={selectedOrder ? `Pedido #${selectedOrder.id}` : 'Meus Pedidos'}
+			pageHeaderLabel={selectedOrder ? `Pedido ${selectedOrder.orderNumber}` : 'Meus Pedidos'}
 			pageHeaderReturnToPath="/menu"
 			pageHeaderOnBack={selectedOrder ? handleBackToList : undefined}
 			bgSecondary
 		>
-			<div className="flex-1 px-4 py-6 space-y-6">
+			<div className="flex-1 px-4 py-6 space-y-6 pb-16">
 				<AnimatePresence mode="wait" initial={false}>
 					<PageTransition key={selectedOrder ? selectedOrder.id : 'list'} direction={navDirection}>
 						{renderContent()}

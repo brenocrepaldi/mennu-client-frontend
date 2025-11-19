@@ -67,6 +67,8 @@ export const useBagModel = () => {
 			return;
 		}
 
+		const deliveryFee = restaurant?.delivery.fee || 0;
+
 		// Criar o pedido
 		const newOrder: IOrder = {
 			id: String(Date.now()),
@@ -74,13 +76,11 @@ export const useBagModel = () => {
 			items: bag.map((item) => ({ ...item })),
 			status: 'pending',
 			subtotal: totalPrice,
-			deliveryFee: 8.0,
 			discount: discount,
-			total: totalPrice + 8.0 - discount,
+			total: totalPrice + deliveryFee - discount,
 			paymentMethod: paymentMethod as PaymentMethod,
 			changeFor: changeFor,
 			deliveryAddress: selectedAddress,
-			estimatedTime: '40-50 min',
 			createdAt: new Date(),
 			updatedAt: new Date(),
 			restaurant: {

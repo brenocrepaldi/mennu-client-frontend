@@ -1,16 +1,9 @@
-import { 
-	Clock, 
-	CheckCircle2, 
-	Package, 
-	ChefHat, 
-	Truck, 
-	XCircle 
-} from 'lucide-react';
+import { Clock, CheckCircle2, Package, ChefHat, Truck, XCircle, Check } from 'lucide-react';
 import { OrderStatus } from '@/types/order';
+import { useRestaurantStore } from '@/store/restaurantStore';
 
 interface OrderStatusTrackerProps {
 	status: OrderStatus;
-	estimatedTime: string;
 	createdAt: Date;
 }
 
@@ -18,52 +11,38 @@ const statusConfig = {
 	pending: {
 		label: 'Pedido Recebido',
 		icon: Clock,
-		color: 'text-warning-700',
-		bgColor: 'bg-warning-50',
-		description: 'Aguardando confirmação do restaurante'
+		description: 'Aguardando confirmação do restaurante',
 	},
 	confirmed: {
 		label: 'Confirmado',
 		icon: CheckCircle2,
-		color: 'text-green-700',
-		bgColor: 'bg-green-50',
-		description: 'Pedido confirmado'
+		description: 'Pedido confirmado pelo restaurante',
 	},
 	preparing: {
-		label: 'Preparando',
+		label: 'Em Preparação',
 		icon: ChefHat,
-		color: 'text-blue-700',
-		bgColor: 'bg-blue-50',
-		description: 'Seu pedido está sendo preparado'
+		description: 'Seu pedido está sendo preparado',
 	},
 	ready: {
 		label: 'Pronto',
 		icon: Package,
-		color: 'text-purple-700',
-		bgColor: 'bg-purple-50',
-		description: 'Aguardando entregador'
+		description: 'Aguardando entregador',
 	},
 	delivering: {
 		label: 'Saiu para Entrega',
 		icon: Truck,
-		color: 'text-green-700',
-		bgColor: 'bg-green-50',
-		description: 'Seu pedido está a caminho'
+		description: 'Seu pedido está a caminho',
 	},
 	delivered: {
 		label: 'Entregue',
 		icon: CheckCircle2,
-		color: 'text-green-700',
-		bgColor: 'bg-green-50',
-		description: 'Pedido entregue com sucesso'
+		description: 'Pedido entregue com sucesso',
 	},
 	cancelled: {
 		label: 'Cancelado',
 		icon: XCircle,
-		color: 'text-red-700',
-		bgColor: 'bg-red-50',
-		description: 'Pedido cancelado'
-	}
+		description: 'Pedido cancelado',
+	},
 };
 
 const statusOrder: OrderStatus[] = [
@@ -72,14 +51,11 @@ const statusOrder: OrderStatus[] = [
 	'preparing',
 	'ready',
 	'delivering',
-	'delivered'
+	'delivered',
 ];
 
-export function OrderStatusTracker({ 
-	status, 
-	estimatedTime,
-	createdAt 
-}: OrderStatusTrackerProps) {
+export function OrderStatusTracker({ status, createdAt }: OrderStatusTrackerProps) {
+	const { restaurant } = useRestaurantStore();
 	const currentConfig = statusConfig[status];
 	const Icon = currentConfig.icon;
 	const currentIndex = statusOrder.indexOf(status);
@@ -88,85 +64,155 @@ export function OrderStatusTracker({
 	const now = new Date();
 	const diffMinutes = Math.floor((now.getTime() - createdAt.getTime()) / 60000);
 
+	const getTimeAgo = (minutes: number): string => {
+		if (minutes < 1) return 'agora mesmo';
+		if (minutes < 60) return `${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`;
+		const hours = Math.floor(minutes / 60);
+		if (hours < 24) return `${hours} ${hours === 1 ? 'hora' : 'horas'}`;
+		const days = Math.floor(hours / 24);
+		if (days < 30) return `${days} ${days === 1 ? 'dia' : 'dias'}`;
+		const months = Math.floor(days / 30);
+		if (months < 12) return `${months} ${months === 1 ? 'mês' : 'meses'}`;
+		const years = Math.floor(months / 12);
+		return `${years} ${years === 1 ? 'ano' : 'anos'}`;
+	};
+
+	const formatDate = (date: Date): string => {
+		const day = date.getDate().toString().padStart(2, '0');
+		const month = (date.getMonth() + 1).toString().padStart(2, '0');
+		const year = date.getFullYear();
+		const hours = date.getHours().toString().padStart(2, '0');
+		const minutes = date.getMinutes().toString().padStart(2, '0');
+
+		return `${day}/${month}/${year} às ${hours}:${minutes}`;
+	};
+
+	// Se o pedido foi cancelado, mostrar apenas o status
+	if (status === 'cancelled') {
+		return (
+			<div className="space-y-4">
+				<div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
+					<div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+						<XCircle size={20} className="text-red-600" />
+					</div>
+					<div className="flex-1">
+						<h3 className="font-semibold text-red-900">{currentConfig.label}</h3>
+						<p className="text-sm text-red-700 mt-1">{currentConfig.description}</p>
+					</div>
+				</div>
+				<div className="text-xs text-basic-500 px-1 space-y-1">
+					<div>Pedido realizado há {getTimeAgo(diffMinutes)}</div>
+					<div className="text-basic-400">{formatDate(createdAt)}</div>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="space-y-6">
-			{/* Status atual com destaque */}
-			<div className={`${currentConfig.bgColor} rounded-lg p-4 flex items-start gap-3`}>
-				<div className={`${currentConfig.color} mt-0.5`}>
-					<Icon size={24} />
-				</div>
-				<div className="flex-1">
-					<h3 className={`font-semibold ${currentConfig.color}`}>
-						{currentConfig.label}
-					</h3>
-					<p className="text-sm text-basic-600 mt-1">
-						{currentConfig.description}
-					</p>
-					{status !== 'delivered' && status !== 'cancelled' && (
-						<p className="text-sm text-basic-700 font-medium mt-2">
-							<Clock size={14} className="inline mr-1" />
-							Previsão: {estimatedTime}
-						</p>
-					)}
+			{/* Status atual destacado */}
+			<div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4">
+				<div className="flex items-start gap-3">
+					<div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 shadow-sm">
+						<Icon size={20} className="text-white" strokeWidth={2.5} />
+					</div>
+					<div className="flex-1">
+						<h3 className="font-bold text-green-900 text-lg">{currentConfig.label}</h3>
+						<p className="text-sm text-green-700 mt-1">{currentConfig.description}</p>
+						{status !== 'delivered' && (
+							<div className="flex items-center gap-1.5 mt-3 text-sm font-medium text-green-800">
+								<Clock size={16} strokeWidth={2.5} />
+								<span>Previsão: {restaurant?.delivery.estimatedTime || '30-45 min'}</span>
+							</div>
+						)}
+					</div>
 				</div>
 			</div>
 
-			{/* Timeline de progresso */}
-			{status !== 'cancelled' && (
-				<div className="space-y-3">
-					{statusOrder.map((orderStatus, index) => {
-						const config = statusConfig[orderStatus];
-						const StatusIcon = config.icon;
-						const isActive = index <= currentIndex;
-						const isCurrent = index === currentIndex;
+			{/* Timeline vertical com linhas de progresso */}
+			<div className="relative pl-1">
+				{statusOrder.map((orderStatus, index) => {
+					const config = statusConfig[orderStatus];
+					const StatusIcon = config.icon;
+					const isCompleted = index < currentIndex;
+					const isCurrent = index === currentIndex;
+					const isActive = index <= currentIndex;
 
-						return (
-							<div key={orderStatus} className="flex items-center gap-3">
-								{/* Indicador */}
-								<div className={`
-									flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center
-									${isActive 
-										? isCurrent 
-											? config.bgColor + ' ' + config.color
-											: 'bg-green-100 text-green-700'
-										: 'bg-basic-100 text-basic-400'
-									}
-								`}>
-									{isActive && index < currentIndex ? (
-										<CheckCircle2 size={18} />
-									) : (
-										<StatusIcon size={18} />
+					return (
+						<div key={orderStatus} className="relative pb-8 last:pb-0">
+							{/* Linha de conexão vertical */}
+							{index < statusOrder.length - 1 && (
+								<div
+									className="absolute left-[19px] top-10 w-0.5 h-[calc(100%-20px)] -translate-x-px"
+									style={{
+										background: isActive
+											? 'linear-gradient(to bottom, #22c55e 0%, #22c55e 100%)'
+											: '#e5e7eb',
+									}}
+								/>
+							)}
+
+							{/* Item do status */}
+							<div className="relative flex items-start gap-4">
+								{/* Indicador circular */}
+								<div className="relative flex-shrink-0">
+									<div
+										className={`
+											w-10 h-10 rounded-full flex items-center justify-center
+											transition-all duration-300 relative z-10
+											${
+												isCompleted
+													? 'bg-green-500 shadow-md shadow-green-200'
+													: isCurrent
+													? 'bg-green-500 shadow-lg shadow-green-300 ring-4 ring-green-100'
+													: 'bg-basic-200'
+											}
+										`}
+									>
+										{isCompleted ? (
+											<Check size={20} className="text-white" strokeWidth={3} />
+										) : (
+											<StatusIcon
+												size={20}
+												className={isCurrent ? 'text-white' : 'text-basic-500'}
+												strokeWidth={isCurrent ? 2.5 : 2}
+											/>
+										)}
+									</div>
+
+									{/* Pulse animation para status atual */}
+									{isCurrent && (
+										<div className="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-20" />
 									)}
 								</div>
 
-								{/* Linha de conexão */}
-								{index < statusOrder.length - 1 && (
-									<div className={`
-										absolute left-[15px] w-0.5 h-8 translate-y-8
-										${isActive ? 'bg-green-300' : 'bg-basic-200'}
-									`} />
-								)}
-
-								{/* Label */}
-								<div className="flex-1">
-									<p className={`text-sm font-medium ${
-										isActive ? 'text-basic-800' : 'text-basic-500'
-									}`}>
+								{/* Conteúdo do status */}
+								<div className="flex-1 pt-1.5">
+									<h4
+										className={`
+										font-semibold text-sm
+										${isActive ? 'text-basic-900' : 'text-basic-500'}
+									`}
+									>
 										{config.label}
-									</p>
+									</h4>
+									{(isCurrent || isCompleted) && (
+										<p className="text-xs text-basic-600 mt-1 leading-relaxed">
+											{config.description}
+										</p>
+									)}
 								</div>
 							</div>
-						);
-					})}
-				</div>
-			)}
+						</div>
+					);
+				})}
+			</div>
 
-			{/* Info do tempo decorrido */}
-			{status !== 'cancelled' && (
-				<div className="text-xs text-basic-500 pt-2 border-t">
-					Pedido realizado há {diffMinutes} minutos
-				</div>
-			)}
+			{/* Rodapé com informação do tempo */}
+			<div className="text-xs text-basic-500 px-1 pt-2 border-t border-basic-200 space-y-1">
+				<div>Pedido realizado há {getTimeAgo(diffMinutes)}</div>
+				<div className="text-basic-400">{formatDate(createdAt)}</div>
+			</div>
 		</div>
 	);
 }

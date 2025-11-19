@@ -1,5 +1,6 @@
 import { IOrder } from '@/types/order';
 import { MapPin, CreditCard, Wallet, Clock } from 'lucide-react';
+import { useRestaurantStore } from '@/store/restaurantStore';
 
 interface OrderItemsListProps {
 	items: IOrder['items'];
@@ -57,6 +58,8 @@ interface OrderDetailsInfoProps {
 }
 
 export function OrderDetailsInfo({ order }: OrderDetailsInfoProps) {
+	const { restaurant } = useRestaurantStore();
+	
 	const paymentMethodLabels = {
 		'credit-card': 'Cartão de Crédito',
 		'debit-card': 'Cartão de Débito',
@@ -104,7 +107,9 @@ export function OrderDetailsInfo({ order }: OrderDetailsInfoProps) {
 								<h4 className="font-bold text-green-800 mb-1 text-[15px]">
 									Tempo Estimado de Entrega
 								</h4>
-								<p className="text-[15px] text-green-700 font-semibold">{order.estimatedTime}</p>
+								<p className="text-[15px] text-green-700 font-semibold">
+									{restaurant?.delivery.estimatedTime || '30-45 min'}
+								</p>
 							</div>
 						</div>
 					</div>
@@ -151,7 +156,7 @@ export function OrderDetailsInfo({ order }: OrderDetailsInfoProps) {
 					<div className="flex justify-between text-[15px]">
 						<span className="text-basic-600">Taxa de Entrega</span>
 						<span className="font-semibold text-basic-800">
-							R$ {order.deliveryFee.toFixed(2).replace('.', ',')}
+							R$ {(restaurant?.delivery.fee || 0).toFixed(2).replace('.', ',')}
 						</span>
 					</div>
 					{order.discount > 0 && (

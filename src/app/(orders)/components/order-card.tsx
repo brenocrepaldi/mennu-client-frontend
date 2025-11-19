@@ -1,5 +1,6 @@
 import { IOrder } from '@/types/order';
 import { ChevronRight, Clock } from 'lucide-react';
+import { useRestaurantStore } from '@/store/restaurantStore';
 
 interface OrderCardProps {
 	order: IOrder;
@@ -7,6 +8,7 @@ interface OrderCardProps {
 }
 
 export function OrderCard({ order, onClick }: OrderCardProps) {
+	const { restaurant } = useRestaurantStore();
 	const itemsCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
 
 	// Date formatting
@@ -90,7 +92,7 @@ export function OrderCard({ order, onClick }: OrderCardProps) {
 				{order.status !== 'delivered' && order.status !== 'cancelled' && (
 					<div className="flex items-center gap-1.5 text-[13px] font-semibold text-green-700 bg-green-50 px-3 py-1.5 rounded-full">
 						<Clock size={14} className="flex-shrink-0" />
-						<span className="whitespace-nowrap">{order.estimatedTime}</span>
+						<span className="whitespace-nowrap">{restaurant?.delivery.estimatedTime || '30-45 min'}</span>
 					</div>
 				)}
 			</div>

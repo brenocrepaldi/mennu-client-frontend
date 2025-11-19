@@ -24,13 +24,11 @@ export interface IOrder {
 	items: IBagItem[];
 	status: OrderStatus;
 	subtotal: number;
-	deliveryFee: number;
 	discount: number;
 	total: number;
 	paymentMethod: PaymentMethod;
 	changeFor?: number; // Troco (apenas para dinheiro)
 	deliveryAddress: IUserAddress;
-	estimatedTime: string; // Tempo estimado (ex: "40-50 min")
 	createdAt: Date;
 	updatedAt: Date;
 	restaurant: {

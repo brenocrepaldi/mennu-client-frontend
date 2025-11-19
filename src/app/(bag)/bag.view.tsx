@@ -49,6 +49,7 @@ export function BagView(props: BagViewProps) {
 								navigate={navigate}
 								restaurant={restaurant}
 								removeItemFromBag={removeItemFromBag}
+								deliveryFee={restaurant.delivery.fee}
 								totalPrice={totalPrice}
 							/>
 						</PageTransition>
