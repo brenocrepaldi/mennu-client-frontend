@@ -28,7 +28,8 @@ export function ProfileView(props: ProfileViewProps) {
 									<h1 className="text-basic-800 font-bold text-xl leading-tight">{user.name}</h1>
 									<span className="text-basic-500 text-sm">{user.email}</span>
 									<span className="text-basic-600 text-xs font-medium bg-basic-100 px-2 py-1 rounded-md w-fit">
-										{user.role === 'SUPER_ADMIN' ? 'Administrador' : user.role}
+										{user.role === 'SUPER_ADMIN' && 'Administrador'}
+										{user.role === 'CUSTOMER' && 'Cliente'}
 									</span>
 								</div>
 							</div>

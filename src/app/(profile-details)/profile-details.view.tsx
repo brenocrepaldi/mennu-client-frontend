@@ -52,7 +52,8 @@ export function ProfileDetailsView(props: ProfileDetailsViewProps) {
 								<div>
 									<p className="text-sm font-medium text-basic-800">Função</p>
 									<p className="text-basic-600">
-										{user.role === 'SUPER_ADMIN' ? 'Administrador' : user.role}
+										{user.role === 'SUPER_ADMIN' && 'Administrador'}
+										{user.role === 'CUSTOMER' && 'Cliente'}
 									</p>
 								</div>
 							</div>
