@@ -172,8 +172,8 @@ export const restaurant = {
 		estimatedTime: '30-45 min',
 	},
 	paymentMethods: {
-		delivery: ['Dinheiro', 'Débito', 'Crédito'],
-		online: ['Pix', 'Crédito'],
+		delivery: ['Crédito', 'Débito', 'PIX', 'Dinheiro'],
+		// online: ['Pix', 'Crédito'],
 	},
 	rating: 4.7,
 	reviews: 125,

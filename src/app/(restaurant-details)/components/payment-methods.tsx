@@ -22,7 +22,7 @@ export function PaymentMethods({ restaurant }: PaymentMethodsProps) {
 				)}
 
 				{/* Pagamento Online */}
-				{restaurant.paymentMethods.online.length > 0 && (
+				{restaurant.paymentMethods.online && restaurant.paymentMethods.online.length > 0 && (
 					<PaymentSection title="Pagamento Online" methods={restaurant.paymentMethods.online} />
 				)}
 			</div>

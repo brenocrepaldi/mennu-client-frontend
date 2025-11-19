@@ -45,7 +45,7 @@ export interface IDelivery {
 // Defines the payment methods supported by the restaurant
 export interface IPaymentMethods {
 	delivery: string[]; // List of payment methods available for delivery (e.g., "Cash", "Card")
-	online: string[]; // List of payment methods available for online orders (e.g., "Credit Card", "PayPal")
+	online?: string[]; // List of payment methods available for online orders (e.g., "Credit Card", "PayPal")
 }
 
 // Represents a restaurant with all its details
