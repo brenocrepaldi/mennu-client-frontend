@@ -27,6 +27,7 @@ export function BagView(props: BagViewProps) {
 		handleStepChange,
 		mockAddresses,
 		selectedAddressId,
+		setSelectedAddressId,
 		handleConfirmOrder,
 		showFooter,
 		navDirection,
@@ -59,6 +60,7 @@ export function BagView(props: BagViewProps) {
 								mockAddresses={mockAddresses}
 								selectedAddressId={selectedAddressId}
 								deliveryFee={restaurant?.delivery.fee}
+								onChangeAddress={setSelectedAddressId}
 							/>
 						</PageTransition>
 					) : (
