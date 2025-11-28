@@ -6,7 +6,8 @@ body {
 }
 
 @theme {
-	--color-app: oklch(0.577 0.245 27.325); /* tailwindcss red-600 */
+	/* --color-app: oklch(0.577 0.245 27.325); tailwindcss red-600 */
+	--color-app: #910201; /* Kintal Lanches */
 	--color-primary: #f4f5f7;
 	--color-secondary: #ffffff;
 

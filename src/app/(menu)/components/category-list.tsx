@@ -17,10 +17,10 @@ export function CategoryList({
 				<button
 					key={category}
 					id={`${category}-button`}
-					className={`px-2 py-1.5 rounded-md text-sm font-semibold border-1 border-basic-600 ${
+					className={`px-2 py-1.5 rounded-md text-sm font-semibold border-1 ${
 						selectedCategory === category
-							? 'bg-basic-600 text-basic-50 ml-0'
-							: 'text-basic-600 m-auto'
+							? 'bg-app border-app text-basic-50 ml-0'
+							: 'text-app bg-app/10 border-app/50 m-auto'
 					}`}
 					onClick={() => handleCategorySelect(category)}
 				>
