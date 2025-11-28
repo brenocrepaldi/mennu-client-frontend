@@ -12,11 +12,7 @@ export type OrderStatus =
 	| 'delivered'      // Pedido entregue
 	| 'cancelled';     // Pedido cancelado
 
-export type PaymentMethod = 
-	| 'credit-card' 
-	| 'debit-card' 
-	| 'pix' 
-	| 'cash';
+export type PaymentMethod = string;
 
 export interface IOrder {
 	id: string;

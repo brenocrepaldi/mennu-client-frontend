@@ -1,7 +1,9 @@
-import { CreditCard, Wallet, Banknote, Tag, Receipt, Loader2 } from 'lucide-react';
+import { Tag, Receipt, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { IBagItem } from '../../../../types/bag';
 import { IUserAddress } from '../../../../types/user';
+import { PaymentMethodType } from '@/types/restaurant';
+import { paymentMethodOptions } from '@/utils/restaurantUtils';
 
 interface CheckoutProps {
 	bag: IBagItem[];
@@ -11,8 +13,6 @@ interface CheckoutProps {
 	onConfirmOrder: (paymentMethod: string, changeFor?: number, discount?: number) => void;
 }
 
-type PaymentMethod = 'credit-card' | 'debit-card' | 'pix' | 'cash';
-
 export function Checkout({
 	bag,
 	selectedAddress,
@@ -20,7 +20,7 @@ export function Checkout({
 	deliveryFee,
 	onConfirmOrder,
 }: CheckoutProps) {
-	const [selectedPayment, setSelectedPayment] = useState<PaymentMethod>('credit-card');
+	const [selectedPayment, setSelectedPayment] = useState<PaymentMethodType>('credit-card');
 	const [couponCode, setCouponCode] = useState('');
 	const [appliedCoupon, setAppliedCoupon] = useState(false);
 	const [discount, setDiscount] = useState(0);
@@ -40,13 +40,6 @@ export function Checkout({
 			discount
 		);
 	};
-
-	const paymentMethods = [
-		{ id: 'credit-card', label: 'Cartão de Crédito', icon: CreditCard },
-		{ id: 'debit-card', label: 'Cartão de Débito', icon: CreditCard },
-		{ id: 'pix', label: 'PIX', icon: Wallet },
-		{ id: 'cash', label: 'Dinheiro', icon: Banknote },
-	];
 
 	const handleApplyCoupon = () => {
 		// Simulação de aplicação de cupom
@@ -119,13 +112,13 @@ export function Checkout({
 				</div>
 
 				<div className="space-y-2">
-					{paymentMethods.map((method) => {
+					{paymentMethodOptions.map((method) => {
 						const Icon = method.icon;
 						const isSelected = selectedPayment === method.id;
 						return (
 							<button
 								key={method.id}
-								onClick={() => setSelectedPayment(method.id as PaymentMethod)}
+								onClick={() => setSelectedPayment(method.id)}
 								className={`w-full flex items-center justify-between p-3 rounded-lg border-2 transition-all ${
 									isSelected ? 'border-app bg-app/5' : 'border-basic-200 hover:border-basic-300'
 								}`}

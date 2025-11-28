@@ -42,10 +42,18 @@ export interface IDelivery {
 	estimatedTime: string; // Estimated delivery time (e.g., "30 minutes")
 }
 
+export interface IPaymentMethodOption {
+	id: PaymentMethodType;
+	label: string;
+	icon: React.ComponentType<{ className?: string; size?: number }>;
+}
+
+export type PaymentMethodType = 'credit-card' | 'debit-card' | 'cash' | 'pix';
+
 // Defines the payment methods supported by the restaurant
 export interface IPaymentMethods {
-	delivery: string[]; // List of payment methods available for delivery (e.g., "Cash", "Card")
-	online?: string[]; // List of payment methods available for online orders (e.g., "Credit Card", "PayPal")
+	delivery: PaymentMethodType[];
+	online?: PaymentMethodType[];
 }
 
 // Represents a restaurant with all its details

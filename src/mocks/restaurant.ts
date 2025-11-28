@@ -1,4 +1,6 @@
-export const restaurant = {
+import { IRestaurant } from '@/types/restaurant';
+
+export const restaurant: IRestaurant = {
 	id: 1,
 	name: 'Kintal Lanches',
 	description: 'Lanches artesanais com ingredientes frescos e sabor incomparável.',
@@ -172,7 +174,7 @@ export const restaurant = {
 		estimatedTime: '30-45 min',
 	},
 	paymentMethods: {
-		delivery: ['Crédito', 'Débito', 'PIX', 'Dinheiro'],
+		delivery: ['credit-card', 'debit-card', 'pix', 'cash'],
 		// online: ['Pix', 'Crédito'],
 	},
 	rating: 4.7,

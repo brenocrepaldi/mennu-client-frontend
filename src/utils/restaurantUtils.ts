@@ -1,4 +1,5 @@
-import { IOperatingHours, IProduct } from '../types/restaurant';
+import { IOperatingHours, IPaymentMethodOption, IProduct } from '../types/restaurant';
+import { CreditCard, Wallet, Banknote } from 'lucide-react';
 
 /**
  * Determines if a restaurant is currently open based on its operating hours.
@@ -69,3 +70,13 @@ export function getAllCategories(menu: IProduct[]): string[] {
 	menu.forEach((item) => categories.add(item.category));
 	return Array.from(categories);
 }
+
+/**
+ * List of payment method options with their labels and icons.
+ */
+export const paymentMethodOptions: IPaymentMethodOption[] = [
+	{ id: 'credit-card', label: 'Crédito', icon: CreditCard },
+	{ id: 'debit-card', label: 'Débito', icon: CreditCard },
+	{ id: 'pix', label: 'PIX', icon: Wallet },
+	{ id: 'cash', label: 'Dinheiro', icon: Banknote },
+];
