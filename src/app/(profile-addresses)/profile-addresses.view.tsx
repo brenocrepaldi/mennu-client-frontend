@@ -1,8 +1,22 @@
 import { Plus } from 'lucide-react';
 import { mockAddresses } from '../../mocks/user';
 import { Page } from '../../components/page-template';
+import { AddressFormModal } from './components/address-form-modal';
+import { useProfileAddressesModel } from './profile-addresses.model';
 
-export function ProfileAddressesView() {
+type ProfileAddressesViewProps = ReturnType<typeof useProfileAddressesModel>;
+
+export function ProfileAddressesView(props: ProfileAddressesViewProps) {
+	const {
+		isModalOpen,
+		setIsModalOpen,
+		addressToEdit,
+		setAddressToEdit,
+		handleAddAddress,
+		handleEditAddress,
+		handleSaveAddress,
+	} = props;
+
 	return (
 		<Page bgSecondary pageHeaderLabel={'Meus Endereços'} pageHeaderReturnToPath={'/profile'}>
 			<div className="flex-1 flex flex-col justify-between gap-12 px-4 py-6">
@@ -28,17 +42,38 @@ export function ProfileAddressesView() {
 											<p className="text-basic-400 text-xs">{address.zipCode}</p>
 										</div>
 									</div>
-									<button className="text-app text-sm font-medium hover:opacity-70">Editar</button>
+									<button
+										onClick={() => {
+											handleEditAddress(address);
+										}}
+										className="text-app text-sm font-medium hover:opacity-70"
+									>
+										Editar
+									</button>
 								</div>
 							</div>
 						))}
 					</div>
 					{/* Add New Address */}
-					<button className="w-full bg-app text-white p-4 rounded-lg font-medium hover:opacity-90 transition-opacity flex items-center justify-center gap-3">
+					<button
+						onClick={handleAddAddress}
+						className="w-full bg-app text-white p-4 rounded-lg font-medium hover:opacity-90 transition-opacity flex items-center justify-center gap-3"
+					>
 						<Plus className="w-5 h-5" />
 						Adicionar novo endereço
 					</button>
 				</div>
+
+				{/* Address Form Modal */}
+				<AddressFormModal
+					isOpen={isModalOpen}
+					onClose={() => {
+						setIsModalOpen(false);
+						setAddressToEdit(undefined);
+					}}
+					onSave={handleSaveAddress}
+					addressToEdit={addressToEdit}
+				/>
 			</div>
 		</Page>
 	);
