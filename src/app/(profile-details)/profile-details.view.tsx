@@ -1,32 +1,24 @@
 import { User, Mail, Calendar } from 'lucide-react';
 import { useProfileDetailsModel } from './profile-details.model';
 import { Page } from '../../components/page-template';
-import { useState } from 'react';
 
 type ProfileDetailsViewProps = ReturnType<typeof useProfileDetailsModel>;
 
 export function ProfileDetailsView(props: ProfileDetailsViewProps) {
-	const { navigate, user, getUserNameInitials } = props;
-	const [isEditing, setIsEditing] = useState(false);
-	const [editedName, setEditedName] = useState(user?.name || '');
-	const [editedEmail, setEditedEmail] = useState(user?.email || '');
+	if (!props) return null;
 
-	if (!user) {
-		void navigate('not-found');
-		return null;
-	}
-
-	const handleSaveChanges = () => {
-		// TODO: Implement save logic
-		console.log('Saving changes:', { name: editedName, email: editedEmail });
-		setIsEditing(false);
-	};
-
-	const handleCancel = () => {
-		setEditedName(user.name);
-		setEditedEmail(user.email);
-		setIsEditing(false);
-	};
+	const {
+		user,
+		getUserNameInitials,
+		isEditing,
+		setIsEditing,
+		editedName,
+		setEditedName,
+		editedEmail,
+		setEditedEmail,
+		handleSaveChanges,
+		handleCancel,
+	} = props;
 
 	return (
 		<Page bgSecondary pageHeaderLabel={'Meu Perfil'} pageHeaderReturnToPath={'/profile'}>
