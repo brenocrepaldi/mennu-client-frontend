@@ -68,7 +68,7 @@ export function OrdersView(props: OrdersViewProps) {
 									<OrderCard
 										key={order.id}
 										order={order}
-										onClick={() => handleSelectOrder(order.id)}
+										onClick={() => { handleSelectOrder(order.id); }}
 									/>
 								))}
 							</div>
@@ -83,7 +83,7 @@ export function OrdersView(props: OrdersViewProps) {
 							<h2 className="text-xl font-bold text-basic-800">Histórico</h2>
 							<p className="text-sm text-basic-600 mt-1">
 								{historyOrders.length > 0
-									? `${historyOrders.length} ${
+									? `${String(historyOrders.length)} ${
 											historyOrders.length === 1 ? 'pedido realizado' : 'pedidos realizados'
 									  }`
 									: 'Nenhum pedido anterior'}
@@ -95,7 +95,7 @@ export function OrdersView(props: OrdersViewProps) {
 									<OrderCard
 										key={order.id}
 										order={order}
-										onClick={() => handleSelectOrder(order.id)}
+										onClick={() => { handleSelectOrder(order.id); }}
 									/>
 								))}
 							</div>

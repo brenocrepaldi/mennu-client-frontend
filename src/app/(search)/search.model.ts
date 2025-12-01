@@ -25,7 +25,7 @@ export const useSearchModel = () => {
 			setDebouncedSearchText(searchText);
 		}, DEBOUNCE_DELAY);
 
-		return () => clearTimeout(timer);
+		return () => { clearTimeout(timer); };
 	}, [searchText]);
 
 	// Memoized search results

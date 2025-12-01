@@ -44,7 +44,7 @@ export function ConfirmAddress({
 							</p>
 						</div>
 						<button
-							onClick={() => setIsModalOpen(true)}
+							onClick={() => { setIsModalOpen(true); }}
 							className="text-sm font-semibold text-app hover:opacity-80 transition-opacity flex-shrink-0"
 						>
 							Trocar
@@ -58,7 +58,7 @@ export function ConfirmAddress({
 						<h3 className="text-base font-bold text-basic-800">Opções de entrega</h3>
 						<div className="relative">
 							<button
-								onClick={() => setIsTooltipOpen(!isTooltipOpen)}
+								onClick={() => { setIsTooltipOpen(!isTooltipOpen); }}
 								className="w-5 h-5 rounded-full bg-basic-200 flex items-center justify-center hover:bg-basic-300 transition-colors"
 							>
 								<span className="text-xs text-basic-600">?</span>
@@ -68,7 +68,7 @@ export function ConfirmAddress({
 							{isTooltipOpen && (
 								<>
 									{/* Backdrop */}
-									<div className="fixed inset-0 z-40" onClick={() => setIsTooltipOpen(false)} />
+									<div className="fixed inset-0 z-40" onClick={() => { setIsTooltipOpen(false); }} />
 									{/* Tooltip Content */}
 									<div className="absolute left-0 top-7 z-50 w-64 bg-basic-800 text-white p-3 rounded-lg shadow-lg">
 										<div className="absolute -top-1.5 left-2 w-3 h-3 bg-basic-800 rotate-45" />

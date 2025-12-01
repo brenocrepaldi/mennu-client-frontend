@@ -1,10 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 
-export type NavLinkProps = {
+export interface NavLinkProps {
 	name: string;
 	icon: React.ReactNode;
 	link: string;
-};
+}
 
 export function NavLink({ name, icon, link }: NavLinkProps) {
 	const location = useLocation();

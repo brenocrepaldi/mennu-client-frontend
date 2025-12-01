@@ -43,7 +43,7 @@ export function ProductFooter({
 					{/* Decrease button */}
 					<button
 						className="h-full w-full flex items-center justify-center rounded-sm"
-						onClick={() => handleCounterChange(-1)}
+						onClick={() => { handleCounterChange(-1); }}
 						disabled={!productCounter} // Disabled when counter is 0
 					>
 						<Minus
@@ -71,7 +71,7 @@ export function ProductFooter({
 					{/* Increase button */}
 					<button
 						className="text-basic-800 h-full w-full flex items-center justify-center text-3xl rounded-sm"
-						onClick={() => handleCounterChange(1)}
+						onClick={() => { handleCounterChange(1); }}
 						disabled={productCounter === maxProductOrder} // Disabled when reaching the max limit
 					>
 						<Plus

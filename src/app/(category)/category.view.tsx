@@ -19,7 +19,7 @@ export function CategoryView(props: ProductDetailsViewProps) {
 	}
 
 	// Show message if category is not found
-	if (!productsOfSelectedCategory || productsOfSelectedCategory.length === 0) {
+	if (productsOfSelectedCategory.length === 0) {
 		return (
 			<UnavailableMessage
 				pageHeaderLabel="Nenhum produto nesta categoria"

@@ -8,7 +8,7 @@ export function ProfileDetailsView(props: ProfileDetailsViewProps) {
 	const { navigate, user, getUserNameInitials } = props;
 
 	if (!user) {
-		navigate('not-found');
+		void navigate('not-found');
 		return null;
 	}
 

@@ -31,13 +31,13 @@ export function AddressSelectorModal({
 		>
 			<div
 				className="bg-white w-full sm:max-w-md sm:rounded-2xl rounded-t-3xl max-h-[85vh] flex flex-col animate-slide-up"
-				onClick={(e) => e.stopPropagation()}
+				onClick={(e) => { e.stopPropagation(); }}
 			>
 				{/* Header */}
 				<div className="flex items-center justify-between p-5 border-b border-basic-200">
 					<h3 className="text-lg font-bold text-basic-800">Selecione o endereço</h3>
 					<button
-						onClick={() => setIsModalOpen(false)}
+						onClick={() => { setIsModalOpen(false); }}
 						className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-basic-100 transition-colors"
 					>
 						<X size={20} className="text-basic-600" />
@@ -52,7 +52,7 @@ export function AddressSelectorModal({
 						return (
 							<button
 								key={address.id}
-								onClick={() => setTempSelectedId(address.id)}
+								onClick={() => { setTempSelectedId(address.id); }}
 								className={`
 											w-full text-left p-4 rounded-xl border-2 transition-all
 											${isSelected ? 'border-app bg-app/5' : 'border-basic-200 hover:border-basic-300 hover:bg-basic-50'}

@@ -23,7 +23,7 @@ export function LoginView(props: LoginViewwProps) {
 			<div className="w-full bg-secondary flex flex-col items-center gap-6 px-4 py-6 text-center shadow-bottom">
 				<ArrowLeft
 					className="size-6 text-basic-800 absolute left-3 top-3"
-					onClick={() => navigate(-1)}
+					onClick={() => void navigate(-1)}
 				/>
 				<img
 					src={restaurant.logo}
@@ -37,7 +37,7 @@ export function LoginView(props: LoginViewwProps) {
 					</span>
 				</div>
 
-				<form action="submit" className="w-full flex flex-col gap-4" onSubmit={handleLogin}>
+				<form action="submit" className="w-full flex flex-col gap-4" onSubmit={() => handleLogin}>
 					<Input
 						type="email"
 						placeholder="E-mail"
@@ -79,7 +79,7 @@ export function LoginView(props: LoginViewwProps) {
 							Não possui uma conta?{' '}
 							<button
 								className="text-sm text-basic-500 underline font-semibold"
-								onClick={() => navigate('/register')}
+								onClick={() => void navigate('/register')}
 							>
 								Cadastrar-se
 							</button>

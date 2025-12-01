@@ -41,7 +41,7 @@ export function BagFooter({
 					</div>
 				</div>
 				<button
-					onClick={() => handleStepChange()}
+					onClick={() => { handleStepChange(); }}
 					className="bg-app px-10 py-2 rounded-lg transition-opacity duration-200 active:opacity-50 cursor-pointer"
 				>
 					<span className="text-sm font-bold text-basic-50">{buttonText}</span>

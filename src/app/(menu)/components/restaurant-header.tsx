@@ -27,7 +27,7 @@ export function RestaurantHeader({ restaurant, navigate, isOpen }: RestaurantHea
 			<div className="bg-secondary rounded-2xl p-3 pr-2 shadow-md -mt-10 relative">
 				<div
 					className="flex items-start space-x-4 max-h-24 overflow-y-hidden"
-					onClick={() => navigate(`/restaurant/${restaurant.id}`)}
+					onClick={() => void navigate(`/restaurant/${String(restaurant.id)}`)}
 				>
 					<img
 						src={restaurant.logo}
@@ -58,7 +58,7 @@ export function RestaurantHeader({ restaurant, navigate, isOpen }: RestaurantHea
 								className="flex items-center w-fit gap-1 px-2 py-1 transition-opacity duration-200 active:opacity-20 cursor-pointer"
 								onClick={(event) => {
 									event.stopPropagation();
-									navigate(`/calculate-delivery`);
+									void navigate(`/calculate-delivery`);
 								}}
 							>
 								<CircleDollarSign className="size-4 text-basic-500" />

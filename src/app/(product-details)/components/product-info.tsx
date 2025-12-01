@@ -34,7 +34,7 @@ export function ProductInfo({
 				</span>
 				{isOverflowing && (
 					<button
-						onClick={() => setReadMore(!readMore)}
+						onClick={() => { setReadMore(!readMore); }}
 						className="text-basic-800 font-semibold text-[0.975rem] underline"
 					>
 						{readMore ? 'Ver menos' : 'Ver mais'}

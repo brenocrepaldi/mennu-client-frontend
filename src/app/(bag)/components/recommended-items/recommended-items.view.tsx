@@ -15,7 +15,9 @@ export function RecommendedItemsView(props: RecommendedItemsViewProps) {
 					<li
 						key={item.id}
 						className="space-y-2 max-w-28"
-						onClick={() => navigate(`/product/${item.id}`)} // Navigate to the product detail page
+						onClick={() => {
+							void navigate(`/product/${String(item.id)}`);
+						}} // Navigate to the product detail page
 					>
 						<div className="relative">
 							{/* Product image */}
@@ -27,7 +29,9 @@ export function RecommendedItemsView(props: RecommendedItemsViewProps) {
 							{/* Add item button (floating in the bottom-right corner) */}
 							<div
 								className="absolute bottom-1 right-1 w-9 h-9 flex items-center justify-center bg-secondary rounded-full"
-								onClick={(e) => handleAddItemToBag(e, item)} // Add item to the bag when clicked
+								onClick={(e) => {
+									handleAddItemToBag(e, item);
+								}} // Add item to the bag when clicked
 							>
 								<Plus className="size-5 text-app" strokeWidth={2.5} />
 							</div>

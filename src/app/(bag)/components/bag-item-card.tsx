@@ -32,7 +32,7 @@ export function BagItemCard({
 					<div
 						className="absolute -top-0.5 -right-1 w-7.5 h-7.5 flex items-center justify-center bg-secondary rounded-full shadow-md"
 						onClick={() =>
-							navigate(`/product/${item.id}/edit`, {
+							void navigate(`/product/${String(item.id)}/edit`, {
 								state: {
 									product: item,
 								},
@@ -69,7 +69,7 @@ export function BagItemCard({
 							onClick={() => {
 								deleteItemFromBag(item.uuid);
 								if (!getTotalItemsCount()) {
-									navigate('/menu');
+									void navigate('/menu');
 									toast.error('Sua sacola está vazia.');
 								}
 							}}
@@ -79,7 +79,9 @@ export function BagItemCard({
 						</button>
 					) : (
 						<button
-							onClick={() => removeItemFromBag(item.uuid)}
+							onClick={() => {
+								removeItemFromBag(item.uuid);
+							}}
 							className="flex items-center justify-center w-8 h-8"
 						>
 							<Minus className="size-5 text-app" strokeWidth={2.5} />
@@ -87,7 +89,9 @@ export function BagItemCard({
 					)}
 					<span className="w-6 text-center text-sm font-semibold">{item.quantity}</span>
 					<button
-						onClick={() => addItemToBag(item)}
+						onClick={() => {
+							addItemToBag(item);
+						}}
 						className="flex items-center justify-center w-8 h-8"
 						disabled={item.quantity === MAX_PRODUCT_ORDER}
 					>

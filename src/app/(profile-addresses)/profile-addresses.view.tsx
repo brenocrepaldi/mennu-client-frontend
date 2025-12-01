@@ -1,18 +1,8 @@
 import { Plus } from 'lucide-react';
 import { mockAddresses } from '../../mocks/user';
 import { Page } from '../../components/page-template';
-import { useProfileAddressesModel } from './profile-addresses.model';
 
-type ProfileAddressesViewProps = ReturnType<typeof useProfileAddressesModel>;
-
-export function ProfileAddressesView(props: ProfileAddressesViewProps) {
-	const { navigate, user } = props;
-
-	if (!user) {
-		navigate('not-found');
-		return null;
-	}
-
+export function ProfileAddressesView() {
 	return (
 		<Page bgSecondary pageHeaderLabel={'Meus Endereços'} pageHeaderReturnToPath={'/profile'}>
 			<div className="flex-1 flex flex-col justify-between gap-12 px-4 py-6">

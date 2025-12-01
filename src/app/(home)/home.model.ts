@@ -8,7 +8,7 @@ export const useHomeModel = () => {
 	const { GoogleSvg } = useProfileUtils();
 
 	const handleEmailLogin = () => {
-		navigate('/login');
+		void navigate('/login');
 	};
 
 	const handleGoogleLogin = () => {
@@ -17,11 +17,11 @@ export const useHomeModel = () => {
 	};
 
 	const handleGoToMenu = () => {
-		navigate('/menu');
+		void navigate('/menu');
 	};
 
 	const handleViewRestaurantDetails = () => {
-		navigate(`/restaurant/${restaurant.id}`);
+		void navigate(`/restaurant/${String(restaurant.id)}`);
 	};
 
 	return {

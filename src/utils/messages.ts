@@ -1,10 +1,10 @@
 export type RestaurantStatus = 'open' | 'closed';
 
-export type RestaurantStatusStyle = {
+export interface RestaurantStatusStyle {
 	label: string;
 	color: string;
 	border: string;
-};
+}
 
 export const RESTAURANT_STATUS_STYLES: Record<RestaurantStatus, RestaurantStatusStyle> = {
 	open: {

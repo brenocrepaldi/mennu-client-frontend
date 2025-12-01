@@ -118,7 +118,7 @@ export function Checkout({
 						return (
 							<button
 								key={method.id}
-								onClick={() => setSelectedPayment(method.id)}
+								onClick={() => { setSelectedPayment(method.id); }}
 								className={`w-full flex items-center justify-between p-3 rounded-lg border-2 transition-all ${
 									isSelected ? 'border-app bg-app/5' : 'border-basic-200 hover:border-basic-300'
 								}`}
@@ -181,7 +181,7 @@ export function Checkout({
 						<input
 							type="text"
 							value={couponCode}
-							onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+							onChange={(e) => { setCouponCode(e.target.value.toUpperCase()); }}
 							placeholder="Digite o código"
 							className="flex-1 px-3 py-2 text-sm border border-basic-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
 						/>
@@ -252,7 +252,7 @@ export function Checkout({
 
 			{/* Confirm Button */}
 			<button
-				onClick={handleConfirmOrder}
+				onClick={() => void handleConfirmOrder()}
 				disabled={isLoading}
 				className="w-full bg-app text-white py-3.5 rounded-lg font-bold text-base hover:opacity-90 transition-opacity active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
 			>

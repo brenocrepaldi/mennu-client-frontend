@@ -19,8 +19,8 @@ export const useRestaurantStore = create<IRestaurantStore>((set) => ({
 
 	// Updates the restaurant state and recalculates its open status
 	updateRestaurant: (newRestaurant) =>
-		set(() => ({
+		{ set(() => ({
 			restaurant: newRestaurant,
 			isOpen: isRestaurantOpen(newRestaurant.operatingHours),
-		})),
+		})); },
 }));

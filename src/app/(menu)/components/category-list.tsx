@@ -22,7 +22,7 @@ export function CategoryList({
 							? 'bg-app border-app text-basic-50 ml-0'
 							: 'text-app bg-app/10 border-app/50 m-auto'
 					}`}
-					onClick={() => handleCategorySelect(category)}
+					onClick={() => { handleCategorySelect(category); }}
 				>
 					{capitalize(category)}
 				</button>

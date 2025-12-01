@@ -29,7 +29,7 @@ export function BagStatus() {
 					</div>
 				</div>
 				<button
-					onClick={() => navigate('/bag')}
+					onClick={() => void navigate('/bag')}
 					className="bg-app px-10 py-2 rounded-lg transition-opacity duration-200 active:opacity-50 cursor-pointer"
 				>
 					<span className="text-sm font-bold text-basic-50">Ver sacola</span>

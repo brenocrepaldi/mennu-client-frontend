@@ -59,7 +59,7 @@ export function BagView(props: BagViewProps) {
 							<ConfirmAddress
 								mockAddresses={mockAddresses}
 								selectedAddressId={selectedAddressId}
-								deliveryFee={restaurant?.delivery.fee}
+								deliveryFee={restaurant.delivery.fee}
 								onChangeAddress={setSelectedAddressId}
 							/>
 						</PageTransition>
@@ -71,7 +71,7 @@ export function BagView(props: BagViewProps) {
 									mockAddresses.find((a) => a.id === selectedAddressId) || mockAddresses[0]
 								}
 								totalPrice={totalPrice}
-								deliveryFee={restaurant?.delivery.fee || 0}
+								deliveryFee={restaurant.delivery.fee || 0}
 								onConfirmOrder={handleConfirmOrder}
 							/>
 						</PageTransition>
@@ -84,7 +84,7 @@ export function BagView(props: BagViewProps) {
 				<BagFooter
 					totalItemsCount={totalItemsCount}
 					totalPrice={totalPrice}
-					deliveryFee={restaurant?.delivery.fee || 0}
+					deliveryFee={restaurant.delivery.fee || 0}
 					currentStep={currentStep}
 					handleStepChange={handleStepChange}
 				/>

@@ -11,9 +11,9 @@ interface OrdersState {
 export const useOrdersStore = create<OrdersState>((set, get) => ({
 	orders: mockOrders,
 	
-	addOrder: (order) => set((state) => ({ 
+	addOrder: (order) => { set((state) => ({ 
 		orders: [order, ...state.orders] 
-	})),
+	})); },
 	
 	getOrderById: (id) => {
 		return get().orders.find(order => order.id === id);

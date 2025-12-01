@@ -39,7 +39,7 @@ export function ProfileView(props: ProfileViewProps) {
 					<div className="flex-1">
 						<div className="bg-white rounded-lg shadow-sm overflow-hidden border border-basic-100">
 							<button
-								onClick={() => navigate('/profile/details')}
+								onClick={() => void navigate('/profile/details')}
 								className="w-full flex items-center justify-between p-4 hover:bg-basic-50 transition-colors duration-200 active:bg-basic-100 border-b border-basic-100"
 							>
 								<div className="flex items-center gap-3">
@@ -49,7 +49,7 @@ export function ProfileView(props: ProfileViewProps) {
 								<ChevronRight className="w-5 h-5 text-basic-400" />
 							</button>
 							<button
-								onClick={() => navigate('/profile/addresses')}
+								onClick={() => void navigate('/profile/addresses')}
 								className="w-full flex items-center justify-between p-4 hover:bg-basic-50 transition-colors duration-200 active:bg-basic-100"
 							>
 								<div className="flex items-center gap-3">
