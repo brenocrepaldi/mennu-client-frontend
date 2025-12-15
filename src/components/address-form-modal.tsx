@@ -3,20 +3,16 @@ import { useState } from 'react';
 import { IUserAddress } from '@/types/user';
 import { toast } from 'sonner';
 import { validateCEP } from '@/utils/validateCEP';
+import { useAddressesStore } from '@/store/addressesStore';
 
 interface AddressFormModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-	onSave: (address: Omit<IUserAddress, 'id' | 'icon'>) => void;
 	addressToEdit?: IUserAddress;
 }
 
-export function AddressFormModal({
-	isOpen,
-	onClose,
-	onSave,
-	addressToEdit,
-}: AddressFormModalProps) {
+export function AddressFormModal({ isOpen, onClose, addressToEdit }: AddressFormModalProps) {
+	const { addAddress, updateAddress } = useAddressesStore();
 	const [isClosing, setIsClosing] = useState(false);
 	const [isValidatingCep, setIsValidatingCep] = useState(false);
 	const [isCepValid, setIsCepValid] = useState(!!addressToEdit);
@@ -36,7 +32,7 @@ export function AddressFormModal({
 
 	const handleSave = () => {
 		const address = `${street}, ${number}`;
-		onSave({
+		const addressData = {
 			type,
 			address,
 			street,
@@ -45,9 +41,17 @@ export function AddressFormModal({
 			neighborhood,
 			city,
 			zipCode,
-		});
+		};
+
+		if (addressToEdit) {
+			updateAddress(addressToEdit.id, addressData);
+			toast.success('Endereço atualizado com sucesso!');
+		} else {
+			addAddress(addressData);
+			toast.success('Endereço adicionado com sucesso!');
+		}
+
 		handleClose();
-		toast.success(`Endereço ${addressToEdit ? 'atualizado' : 'adicionado'} com sucesso!`);
 	};
 
 	const isFormValid =

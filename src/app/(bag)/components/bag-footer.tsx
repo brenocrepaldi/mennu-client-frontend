@@ -30,7 +30,7 @@ export function BagFooter({
 						</div>
 					</div>
 					<div className="flex flex-col">
-						<span className="text-basic-500 text-xs font-[500]">
+						<span className="text-basic-500 text-xs font-medium">
 							Total com a entrega
 						</span>
 						<div className="flex gap-1">

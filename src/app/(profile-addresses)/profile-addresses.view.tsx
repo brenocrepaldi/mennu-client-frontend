@@ -1,8 +1,12 @@
-import { Plus } from 'lucide-react';
-import { mockAddresses } from '../../mocks/user';
+import { Plus, Trash2, Pencil } from 'lucide-react';
+import { useState } from 'react';
 import { Page } from '../../components/page-template';
-import { AddressFormModal } from './components/address-form-modal';
+import { AddressFormModal } from '../../components/address-form-modal';
+import { ConfirmModal } from '../../components/confirm-modal';
 import { useProfileAddressesModel } from './profile-addresses.model';
+import { useAddressesStore } from '@/store/addressesStore';
+import { toast } from 'sonner';
+import type { IUserAddress } from '@/types/user';
 
 type ProfileAddressesViewProps = ReturnType<typeof useProfileAddressesModel>;
 
@@ -14,8 +18,17 @@ export function ProfileAddressesView(props: ProfileAddressesViewProps) {
 		setAddressToEdit,
 		handleAddAddress,
 		handleEditAddress,
-		handleSaveAddress,
 	} = props;
+	const { addresses, deleteAddress } = useAddressesStore();
+	const [addressToDelete, setAddressToDelete] = useState<IUserAddress | null>(null);
+
+	const handleDelete = () => {
+		if (addressToDelete) {
+			deleteAddress(addressToDelete.id);
+			toast.success('Endereço excluído.');
+			setAddressToDelete(null);
+		}
+	};
 
 	return (
 		<Page bgSecondary pageHeaderLabel={'Meus Endereços'} pageHeaderReturnToPath={'/profile'}>
@@ -23,15 +36,18 @@ export function ProfileAddressesView(props: ProfileAddressesViewProps) {
 				<div className="space-y-6">
 					{/* Addresses List */}
 					<div className="space-y-3">
-						{mockAddresses.map((address) => (
+						{addresses.length === 0 && (
+							<p className="text-sm text-basic-500">Você ainda não possui endereços cadastrados.</p>
+						)}
+						{addresses.map((address) => (
 							<div
 								key={address.id}
-								className="bg-white rounded-lg shadow-sm border border-basic-100 p-4 hover:shadow-md transition-shadow"
+								className="bg-white rounded-xl shadow-sm border border-basic-100 p-5 hover:shadow-md transition-all"
 							>
-								<div className="flex items-start justify-between">
-									<div className="flex items-start gap-3">
+								<div className="flex items-start justify-between gap-4">
+									<div className="flex items-start gap-3 flex-1">
 										<div className="p-2 bg-basic-100 rounded-lg text-basic-600">{address.icon}</div>
-										<div className="flex-1">
+										<div className="flex-1 min-w-0">
 											<div className="flex items-center gap-2">
 												<h3 className="font-semibold text-basic-800">{address.type}</h3>
 											</div>
@@ -39,17 +55,29 @@ export function ProfileAddressesView(props: ProfileAddressesViewProps) {
 											<p className="text-basic-500 text-sm">
 												{address.neighborhood}, {address.city}
 											</p>
-											<p className="text-basic-400 text-xs">{address.zipCode}</p>
+											<p className="text-basic-400 text-xs mt-1">{address.zipCode}</p>
 										</div>
 									</div>
-									<button
-										onClick={() => {
-											handleEditAddress(address);
-										}}
-										className="text-app text-sm font-medium hover:opacity-70"
-									>
-										Editar
-									</button>
+									<div className="flex gap-2">
+										<button
+											onClick={() => {
+												handleEditAddress(address);
+											}}
+											className="p-2 rounded-lg bg-basic-800/10 text-basic-800 hover:bg-basic-800/20 transition-colors"
+											title="Editar endereço"
+										>
+											<Pencil className="w-4 h-4" />
+										</button>
+										<button
+											onClick={() => {
+												setAddressToDelete(address);
+											}}
+											className="p-2 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 transition-colors"
+											title="Excluir endereço"
+										>
+											<Trash2 className="w-4 h-4" />
+										</button>
+									</div>
 								</div>
 							</div>
 						))}
@@ -72,8 +100,21 @@ export function ProfileAddressesView(props: ProfileAddressesViewProps) {
 						setIsModalOpen(false);
 						setAddressToEdit(undefined);
 					}}
-					onSave={handleSaveAddress}
 					addressToEdit={addressToEdit}
+				/>
+
+				{/* Confirm Delete Modal */}
+				<ConfirmModal
+					isOpen={!!addressToDelete}
+					onClose={() => {
+						setAddressToDelete(null);
+					}}
+					onConfirm={handleDelete}
+					title="Excluir endereço"
+					message={`Tem certeza que deseja excluir o endereço?`}
+					confirmText="Excluir"
+					cancelText="Cancelar"
+					isDangerous
 				/>
 			</div>
 		</Page>

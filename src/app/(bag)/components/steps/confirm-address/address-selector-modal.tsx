@@ -61,7 +61,7 @@ export function AddressSelectorModal({
 								<div className="flex items-start gap-3">
 									<div
 										className={`
-												w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0
+												w-10 h-10 rounded-full flex items-center justify-center shrink-0
 												${isSelected ? 'bg-app/10' : 'bg-basic-100'}
 											`}
 									>

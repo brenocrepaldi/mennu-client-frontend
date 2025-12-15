@@ -15,12 +15,6 @@ export const useProfileAddressesModel = () => {
 		setIsModalOpen(true);
 	};
 
-	const handleSaveAddress = (address: Omit<IUserAddress, 'id' | 'icon'>) => {
-		// TODO: Implementar lógica de salvar/editar endereço
-		console.log('Salvando endereço:', address);
-		setIsModalOpen(false);
-		setAddressToEdit(undefined);
-	};
 	return {
 		isModalOpen,
 		setIsModalOpen,
@@ -28,6 +22,5 @@ export const useProfileAddressesModel = () => {
 		setAddressToEdit,
 		handleAddAddress,
 		handleEditAddress,
-		handleSaveAddress,
 	};
 };

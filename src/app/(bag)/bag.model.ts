@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useBagStore } from '../../store/bagStore';
 import { useRestaurantStore } from '../../store/restaurantStore';
 import { useOrdersStore } from '@/store/ordersStore';
+import { useAddressesStore } from '@/store/addressesStore';
 import { useMockUser } from '../../hooks/useMockUser';
-import { mockAddresses } from '../../mocks/user';
 import { IOrder } from '@/types/order';
 import { toast } from 'sonner';
 
@@ -12,6 +12,7 @@ export const useBagModel = () => {
 	const navigate = useNavigate();
 	const { restaurant } = useRestaurantStore();
 	const { user } = useMockUser();
+	const { addresses } = useAddressesStore();
 	const {
 		bag,
 		totalPrice,
@@ -23,7 +24,7 @@ export const useBagModel = () => {
 		clearBag,
 	} = useBagStore();
 
-	const [selectedAddressId, setSelectedAddressId] = useState<number>(mockAddresses[0]?.id || 1);
+	const [selectedAddressId, setSelectedAddressId] = useState<number>(addresses[0]?.id || 1);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -60,7 +61,7 @@ export const useBagModel = () => {
 	const { addOrder } = useOrdersStore();
 
 	const handleConfirmOrder = (paymentMethod: string, changeFor?: number, discount = 0) => {
-		const selectedAddress = mockAddresses.find((addr) => addr.id === selectedAddressId);
+		const selectedAddress = addresses.find((addr) => addr.id === selectedAddressId);
 
 		if (!selectedAddress) {
 			toast.error('Endereço não encontrado');
@@ -112,7 +113,7 @@ export const useBagModel = () => {
 		handleOnBack,
 		currentStep,
 		handleStepChange,
-		mockAddresses,
+		addresses,
 		selectedAddressId,
 		setSelectedAddressId,
 		handleConfirmOrder,

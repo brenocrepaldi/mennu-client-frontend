@@ -22,7 +22,7 @@ export function OrderItemsList({ items }: OrderItemsListProps) {
 						<img
 							src={item.image}
 							alt={item.name}
-							className="w-20 h-20 object-cover rounded-xl flex-shrink-0"
+							className="w-20 h-20 object-cover rounded-xl shrink-0"
 						/>
 						<div className="flex-1 min-w-0">
 							<div className="flex justify-between items-start gap-3 mb-2">
@@ -80,7 +80,7 @@ export function OrderDetailsInfo({
 				{/* Endereço de entrega */}
 				<div className="bg-basic-50 rounded-xl p-4 mb-3">
 					<div className="flex gap-3">
-						<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+						<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shrink-0">
 							<MapPin size={20} className="text-app" />
 						</div>
 						<div className="flex-1">
@@ -105,7 +105,7 @@ export function OrderDetailsInfo({
 				{order.status !== 'delivered' && order.status !== 'cancelled' && (
 					<div className="bg-green-50 border border-green-200 rounded-xl p-4">
 						<div className="flex gap-3">
-							<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+							<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shrink-0">
 								<Clock size={20} className="text-green-700" />
 							</div>
 							<div className="flex-1">
@@ -126,7 +126,7 @@ export function OrderDetailsInfo({
 				<h3 className="text-lg font-bold text-basic-800 mb-4">Pagamento</h3>
 				<div className="bg-basic-50 rounded-xl p-4">
 					<div className="flex gap-3">
-						<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+						<div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shrink-0">
 							{order.paymentMethod === 'cash' || order.paymentMethod === 'pix' ? (
 								<Wallet size={20} className="text-app" />
 							) : (
