@@ -5,8 +5,6 @@ import { Page } from '../../components/page-template';
 type ProfileDetailsViewProps = ReturnType<typeof useProfileDetailsModel>;
 
 export function ProfileDetailsView(props: ProfileDetailsViewProps) {
-	if (!props) return null;
-
 	const {
 		user,
 		getUserNameInitials,
@@ -19,6 +17,8 @@ export function ProfileDetailsView(props: ProfileDetailsViewProps) {
 		handleSaveChanges,
 		handleCancel,
 	} = props;
+
+	if (!user) return null;
 
 	return (
 		<Page bgSecondary pageHeaderLabel={'Meu Perfil'} pageHeaderReturnToPath={'/profile'}>

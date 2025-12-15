@@ -13,7 +13,6 @@ export const useProfileDetailsModel = () => {
 
 	if (!user) {
 		void navigate('not-found');
-		return null;
 	}
 
 	const handleSaveChanges = () => {
@@ -23,6 +22,7 @@ export const useProfileDetailsModel = () => {
 	};
 
 	const handleCancel = () => {
+		if (!user) return;
 		setEditedName(user.name);
 		setEditedEmail(user.email);
 		setIsEditing(false);
