@@ -1,7 +1,8 @@
-import { X } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { IUserAddress } from '@/types/user';
 import { toast } from 'sonner';
+import { validateCEP } from '@/utils/validateCEP';
 
 interface AddressFormModalProps {
 	isOpen: boolean;
@@ -17,6 +18,8 @@ export function AddressFormModal({
 	addressToEdit,
 }: AddressFormModalProps) {
 	const [isClosing, setIsClosing] = useState(false);
+	const [isValidatingCep, setIsValidatingCep] = useState(false);
+	const [isCepValid, setIsCepValid] = useState(!!addressToEdit);
 	const [type, setType] = useState<'Casa' | 'Trabalho' | 'Outro'>(addressToEdit?.type ?? 'Casa');
 	const [street, setStreet] = useState(addressToEdit?.street ?? '');
 	const [number, setNumber] = useState(addressToEdit?.number ?? '');
@@ -48,6 +51,7 @@ export function AddressFormModal({
 	};
 
 	const isFormValid =
+		isCepValid &&
 		street.trim() !== '' &&
 		number.trim() !== '' &&
 		neighborhood.trim() !== '' &&
@@ -55,6 +59,30 @@ export function AddressFormModal({
 		zipCode.trim() !== '';
 
 	if (!isOpen) return null;
+
+	const handleCEPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value.replace(/\D/g, '').slice(0, 8);
+		setZipCode(value);
+		setIsCepValid(false); // reset CEP validity on change
+		if (value.length === 8) {
+			setIsValidatingCep(true);
+			void validateCEP(value)
+				.then((data) => {
+					if ('erro' in data) {
+						toast.error('CEP não encontrado. Por favor, verifique o valor informado.');
+						setIsCepValid(false);
+					} else {
+						setStreet(data.logradouro);
+						setNeighborhood(data.bairro);
+						setCity(data.localidade);
+						setIsCepValid(true); // valid CEP
+					}
+				})
+				.finally(() => {
+					setIsValidatingCep(false);
+				});
+		}
+	};
 
 	return (
 		<div
@@ -111,15 +139,34 @@ export function AddressFormModal({
 					{/* CEP */}
 					<div>
 						<label className="block text-sm font-semibold text-basic-800 mb-2">CEP</label>
+						<div className="relative">
+							<input
+								type="text"
+								value={zipCode.replace(/(\d{5})(\d)/, '$1-$2')}
+								onChange={handleCEPChange}
+								placeholder="00000-000"
+								maxLength={9}
+								disabled={isValidatingCep}
+								className="w-full px-3 py-2.5 pr-10 border border-basic-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20 disabled:opacity-50 disabled:cursor-not-allowed"
+							/>
+							{isValidatingCep && (
+								<div className="absolute right-3 top-1/2 -translate-y-1/2">
+									<Loader2 className="size-5 text-app animate-spin" />
+								</div>
+							)}
+						</div>
+					</div>
+
+					{/* City */}
+					<div>
+						<label className="block text-sm font-semibold text-basic-800 mb-2">Cidade</label>
 						<input
 							type="text"
-							value={zipCode.replace(/(\d{5})(\d)/, '$1-$2')}
+							value={city}
 							onChange={(e) => {
-								const value = e.target.value.replace(/\D/g, '').slice(0, 8);
-								setZipCode(value);
+								setCity(e.target.value);
 							}}
-							placeholder="00000-000"
-							maxLength={9}
+							placeholder="Nome da cidade"
 							className="w-full px-3 py-2.5 border border-basic-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
 						/>
 					</div>
@@ -152,44 +199,31 @@ export function AddressFormModal({
 								className="w-full px-3 py-2.5 border border-basic-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
 							/>
 						</div>
+						{/* Neighborhood */}
 						<div>
-							<label className="block text-sm font-semibold text-basic-800 mb-2">Complemento</label>
+							<label className="block text-sm font-semibold text-basic-800 mb-2">Bairro</label>
 							<input
 								type="text"
-								value={complement}
+								value={neighborhood}
 								onChange={(e) => {
-									setComplement(e.target.value);
+									setNeighborhood(e.target.value);
 								}}
-								placeholder="Apto 101"
+								placeholder="Nome do bairro"
 								className="w-full px-3 py-2.5 border border-basic-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
 							/>
 						</div>
 					</div>
 
-					{/* Neighborhood */}
+					{/* Complement */}
 					<div>
-						<label className="block text-sm font-semibold text-basic-800 mb-2">Bairro</label>
+						<label className="block text-sm font-semibold text-basic-800 mb-2">Complemento</label>
 						<input
 							type="text"
-							value={neighborhood}
+							value={complement}
 							onChange={(e) => {
-								setNeighborhood(e.target.value);
+								setComplement(e.target.value);
 							}}
-							placeholder="Nome do bairro"
-							className="w-full px-3 py-2.5 border border-basic-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
-						/>
-					</div>
-
-					{/* City */}
-					<div>
-						<label className="block text-sm font-semibold text-basic-800 mb-2">Cidade</label>
-						<input
-							type="text"
-							value={city}
-							onChange={(e) => {
-								setCity(e.target.value);
-							}}
-							placeholder="Nome da cidade"
+							placeholder="Apto 101"
 							className="w-full px-3 py-2.5 border border-basic-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
 						/>
 					</div>
