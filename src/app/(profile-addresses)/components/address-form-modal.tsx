@@ -1,6 +1,7 @@
 import { X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { IUserAddress } from '@/types/user';
+import { toast } from 'sonner';
 
 interface AddressFormModalProps {
 	isOpen: boolean;
@@ -16,42 +17,18 @@ export function AddressFormModal({
 	addressToEdit,
 }: AddressFormModalProps) {
 	const [isClosing, setIsClosing] = useState(false);
-	const [type, setType] = useState<'Casa' | 'Trabalho' | 'Outro'>('Casa');
-	const [street, setStreet] = useState('');
-	const [number, setNumber] = useState('');
-	const [complement, setComplement] = useState('');
-	const [neighborhood, setNeighborhood] = useState('');
-	const [city, setCity] = useState('');
-	const [zipCode, setZipCode] = useState('');
-
-	useEffect(() => {
-		if (addressToEdit) {
-			setType(addressToEdit.type);
-			setStreet(addressToEdit.street);
-			setNumber(addressToEdit.number);
-			setComplement(addressToEdit.complement || '');
-			setNeighborhood(addressToEdit.neighborhood);
-			setCity(addressToEdit.city);
-			setZipCode(addressToEdit.zipCode);
-		}
-	}, [addressToEdit]);
+	const [type, setType] = useState<'Casa' | 'Trabalho' | 'Outro'>(addressToEdit?.type ?? 'Casa');
+	const [street, setStreet] = useState(addressToEdit?.street ?? '');
+	const [number, setNumber] = useState(addressToEdit?.number ?? '');
+	const [complement, setComplement] = useState(addressToEdit?.complement ?? '');
+	const [neighborhood, setNeighborhood] = useState(addressToEdit?.neighborhood ?? '');
+	const [city, setCity] = useState(addressToEdit?.city ?? '');
+	const [zipCode, setZipCode] = useState(addressToEdit?.zipCode ?? '');
 
 	const handleClose = () => {
 		setIsClosing(true);
-		setTimeout(() => {
-			onClose();
-			setIsClosing(false);
-			// Reset form
-			if (!addressToEdit) {
-				setType('Casa');
-				setStreet('');
-				setNumber('');
-				setComplement('');
-				setNeighborhood('');
-				setCity('');
-				setZipCode('');
-			}
-		}, 300);
+		onClose();
+		setIsClosing(false);
 	};
 
 	const handleSave = () => {
@@ -67,6 +44,7 @@ export function AddressFormModal({
 			zipCode,
 		});
 		handleClose();
+		toast.success(`Endereço ${addressToEdit ? 'atualizado' : 'adicionado'} com sucesso!`);
 	};
 
 	const isFormValid =
@@ -135,11 +113,13 @@ export function AddressFormModal({
 						<label className="block text-sm font-semibold text-basic-800 mb-2">CEP</label>
 						<input
 							type="text"
-							value={zipCode}
+							value={zipCode.replace(/(\d{5})(\d)/, '$1-$2')}
 							onChange={(e) => {
-								setZipCode(e.target.value);
+								const value = e.target.value.replace(/\D/g, '').slice(0, 8);
+								setZipCode(value);
 							}}
 							placeholder="00000-000"
+							maxLength={9}
 							className="w-full px-3 py-2.5 border border-basic-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
 						/>
 					</div>
@@ -163,7 +143,7 @@ export function AddressFormModal({
 						<div>
 							<label className="block text-sm font-semibold text-basic-800 mb-2">Número</label>
 							<input
-								type="text"
+								type="number"
 								value={number}
 								onChange={(e) => {
 									setNumber(e.target.value);

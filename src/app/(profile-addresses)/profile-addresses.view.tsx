@@ -66,6 +66,7 @@ export function ProfileAddressesView(props: ProfileAddressesViewProps) {
 
 				{/* Address Form Modal */}
 				<AddressFormModal
+					key={addressToEdit?.id ?? 'new-address'}
 					isOpen={isModalOpen}
 					onClose={() => {
 						setIsModalOpen(false);

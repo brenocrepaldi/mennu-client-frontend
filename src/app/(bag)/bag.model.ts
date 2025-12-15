@@ -92,7 +92,7 @@ export const useBagModel = () => {
 		addOrder(newOrder);
 		toast.success('Pedido confirmado!');
 		clearBag();
-		void navigate('/orders');
+		void navigate('/order/success');
 	};
 
 	const showFooter = currentStep !== 'checkout';
