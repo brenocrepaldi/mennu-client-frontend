@@ -4,20 +4,20 @@ import { useRestaurantStore } from '../../store/restaurantStore';
 import { useRegexValidations } from '../../utils/regexValidations';
 import { useState } from 'react';
 
-type RegisterForm = {
+interface RegisterForm {
 	name: string;
 	email: string;
 	password: string;
 	passwordConfirm: string;
-};
+}
 
-type RegisterFormValidity = {
+interface RegisterFormValidity {
 	isNameValid: boolean;
 	isEmailValid: boolean;
 	isPasswordValid: boolean;
 	isPasswordConfirmValid: boolean;
 	doPasswordsMatch: boolean;
-};
+}
 
 export const useRegisterModel = () => {
 	const navigate = useNavigate();
@@ -118,7 +118,7 @@ export const useRegisterModel = () => {
 			toast.error('Erro de conexão. Verifique sua internet e tente novamente');
 		} finally {
 			setIsLoading(false);
-			navigate('/register/success');
+			void navigate('/register/success');
 		}
 	}
 

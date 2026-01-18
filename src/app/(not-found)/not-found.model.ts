@@ -4,7 +4,7 @@ export function useNotFoundModel() {
 	const navigate = useNavigate();
 
 	const handleGoHome = () => {
-		navigate('/menu');
+		void navigate('/menu');
 	};
 
 	return { handleGoHome };

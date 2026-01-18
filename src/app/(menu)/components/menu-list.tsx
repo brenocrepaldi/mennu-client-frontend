@@ -20,7 +20,7 @@ export function MenuList({ categorizedMenu, navigate, capitalize }: MenuListProp
 							<div
 								key={product.id}
 								className="w-full max-h-48 flex gap-6 bg-secondary py-6 px-4 border-[0.7px] border-primary"
-								onClick={() => navigate(`/product/${product.id}`)}
+								onClick={() => void navigate(`/product/${String(product.id)}`)}
 							>
 								<div className="flex-1 flex flex-col gap-2">
 									<span className="font-extrabold text-basic-800 line-clamp-1">{product.name}</span>

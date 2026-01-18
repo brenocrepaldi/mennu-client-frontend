@@ -14,9 +14,9 @@ export function PageHeader({ label, returnToPath, onBack }: PageHeaderProps) {
 		if (onBack) {
 			onBack();
 		} else if (returnToPath) {
-			navigate(returnToPath);
+			void navigate(returnToPath);
 		} else {
-			navigate(-1);
+			void navigate(-1);
 		}
 	};
 

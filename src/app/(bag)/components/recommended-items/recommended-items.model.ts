@@ -27,7 +27,7 @@ export const useRecommendedItemsModel = ({
 
 	// Function to handle adding an item to the bag
 	function handleAddItemToBag(
-		event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+		event: React.MouseEvent<HTMLDivElement>,
 		product: IProduct
 	) {
 		// Prevent the click event from bubbling up to the parent element

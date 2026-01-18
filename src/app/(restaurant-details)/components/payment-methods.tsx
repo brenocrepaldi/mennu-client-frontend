@@ -1,5 +1,6 @@
+import { IRestaurant } from '@/types/restaurant';
+import { paymentMethodOptions } from '@/utils/restaurantUtils';
 import { CircleDollarSign } from 'lucide-react';
-import { IRestaurant } from '../../../types/restaurant';
 
 interface PaymentMethodsProps {
 	restaurant: IRestaurant;
@@ -44,7 +45,7 @@ const PaymentSection = ({ title, methods }: PaymentSectionProps) => (
 					key={index}
 					className="px-2 py-1 bg-basic-100 rounded font-semibold text-basic-800 text-sm"
 				>
-					{item}
+					{paymentMethodOptions.find((option) => option.id === item)?.label || item}
 				</span>
 			))}
 		</div>

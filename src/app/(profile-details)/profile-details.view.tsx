@@ -5,12 +5,20 @@ import { Page } from '../../components/page-template';
 type ProfileDetailsViewProps = ReturnType<typeof useProfileDetailsModel>;
 
 export function ProfileDetailsView(props: ProfileDetailsViewProps) {
-	const { navigate, user, getUserNameInitials } = props;
+	const {
+		user,
+		getUserNameInitials,
+		isEditing,
+		setIsEditing,
+		editedName,
+		setEditedName,
+		editedEmail,
+		setEditedEmail,
+		handleSaveChanges,
+		handleCancel,
+	} = props;
 
-	if (!user) {
-		navigate('not-found');
-		return null;
-	}
+	if (!user) return null;
 
 	return (
 		<Page bgSecondary pageHeaderLabel={'Meu Perfil'} pageHeaderReturnToPath={'/profile'}>
@@ -33,35 +41,78 @@ export function ProfileDetailsView(props: ProfileDetailsViewProps) {
 						<div className="space-y-3 pt-4 border-t border-basic-100">
 							<div className="flex items-center gap-3 p-3 bg-basic-50 rounded-lg">
 								<User className="w-5 h-5 text-basic-600" />
-								<div>
-									<p className="text-sm font-medium text-basic-800">Nome completo</p>
-									<p className="text-basic-600">{user.name}</p>
+								<div className="flex-1">
+									<p className="text-sm font-medium text-basic-800 mb-1">Nome completo</p>
+									{isEditing ? (
+										<input
+											type="text"
+											value={editedName}
+											onChange={(e) => {
+												setEditedName(e.target.value);
+											}}
+											className="w-full px-3 py-2 text-sm border border-basic-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
+										/>
+									) : (
+										<p className="text-basic-600">{user.name}</p>
+									)}
 								</div>
 							</div>
 
 							<div className="flex items-center gap-3 p-3 bg-basic-50 rounded-lg">
 								<Mail className="w-5 h-5 text-basic-600" />
-								<div>
-									<p className="text-sm font-medium text-basic-800">E-mail</p>
-									<p className="text-basic-600">{user.email}</p>
+								<div className="flex-1">
+									<p className="text-sm font-medium text-basic-800 mb-1">E-mail</p>
+									{isEditing ? (
+										<input
+											type="email"
+											value={editedEmail}
+											onChange={(e) => {
+												setEditedEmail(e.target.value);
+											}}
+											className="w-full px-3 py-2 text-sm border border-basic-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-app/20"
+										/>
+									) : (
+										<p className="text-basic-600">{user.email}</p>
+									)}
 								</div>
 							</div>
 
-							<div className="flex items-center gap-3 p-3 bg-basic-50 rounded-lg">
-								<Calendar className="w-5 h-5 text-basic-600" />
-								<div>
-									<p className="text-sm font-medium text-basic-800">Função</p>
-									<p className="text-basic-600">
-										{user.role === 'SUPER_ADMIN' && 'Administrador'}
-										{user.role === 'CUSTOMER' && 'Cliente'}
-									</p>
+							{user.role === 'SUPER_ADMIN' && (
+								<div className="flex items-center gap-3 p-3 bg-basic-50 rounded-lg">
+									<Calendar className="w-5 h-5 text-basic-600" />
+									<div>
+										<p className="text-sm font-medium text-basic-800">Função</p>
+										<p className="text-basic-600">Administrador</p>
+									</div>
 								</div>
-							</div>
+							)}
 						</div>
 
-						<button className="w-full bg-app text-white py-3 px-4 rounded-lg font-medium hover:opacity-90 transition-opacity">
-							Editar Perfil
-						</button>
+						{isEditing ? (
+							<div className="space-y-3">
+								<button
+									onClick={handleSaveChanges}
+									className="w-full bg-app text-white py-3 px-4 rounded-lg font-medium hover:opacity-90 transition-opacity"
+								>
+									Confirmar Alterações
+								</button>
+								<button
+									onClick={handleCancel}
+									className="w-full bg-basic-100 text-basic-800 py-3 px-4 rounded-lg font-medium hover:bg-basic-200 transition-colors"
+								>
+									Cancelar
+								</button>
+							</div>
+						) : (
+							<button
+								onClick={() => {
+									setIsEditing(true);
+								}}
+								className="w-full bg-app text-white py-3 px-4 rounded-lg font-medium hover:opacity-90 transition-opacity"
+							>
+								Editar Perfil
+							</button>
+						)}
 					</div>
 				</div>
 			</div>

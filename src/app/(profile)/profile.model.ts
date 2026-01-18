@@ -16,7 +16,7 @@ export const useProfileModel = () => {
 		toast.error('Saindo...');
 		setTimeout(() => {
 			clearUser();
-			navigate('/login');
+			void navigate('/login');
 		}, 1000);
 	};
 

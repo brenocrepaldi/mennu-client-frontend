@@ -5,9 +5,11 @@ import { App } from './app';
 
 import './index.css';
 
-createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<App />
-		<Toaster richColors position="top-center" />
-	</StrictMode>
-);
+const rootElement = document.getElementById('root');
+if (rootElement)
+	createRoot(rootElement).render(
+		<StrictMode>
+			<App />
+			<Toaster richColors position="top-center" />
+		</StrictMode>
+	);

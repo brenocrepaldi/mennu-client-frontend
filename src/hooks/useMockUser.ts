@@ -2,17 +2,17 @@ import { useEffect } from 'react';
 import { useUserStore } from '../store/userStore';
 
 export function useMockUser() {
-	const { user, isAuthenticated, loadMockUser, clearUser, saveMockUser } = useUserStore();
+	const { user, isAuthenticated, loadUser, clearUser, saveUser } = useUserStore();
 
 	useEffect(() => {
-		if (!user && !isAuthenticated) loadMockUser();
-	}, [user, isAuthenticated, loadMockUser]);
+		if (!user && !isAuthenticated) loadUser();
+	}, [user, isAuthenticated, loadUser]);
 
 	return {
 		user,
 		isAuthenticated,
-		loadMockUser,
+		loadUser,
 		clearUser,
-		saveMockUser,
+		saveUser,
 	};
 }

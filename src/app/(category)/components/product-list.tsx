@@ -22,7 +22,7 @@ export function ProductList({
 						<div
 							key={product.id}
 							className="w-full max-h-48 flex gap-6 bg-secondary py-6 px-4 border-[0.7px] border-primary"
-							onClick={() => navigate(`/product/${product.id}`)}
+							onClick={() => void navigate(`/product/${String(product.id)}`)}
 						>
 							<div className="flex-1 flex flex-col gap-2">
 								<span className="font-extrabold text-basic-800 line-clamp-1">{product.name}</span>
@@ -53,7 +53,7 @@ export function ProductList({
 					{categories.map((category: string, index: number) => (
 						<button
 							key={index}
-							onClick={() => navigate(`/category/${category}`)}
+							onClick={() => void navigate(`/category/${category}`)}
 							className="bg-white rounded-full px-4 py-2 text-center border border-basic-200 hover:border-basic-300 transition-opacity duration-200 active:opacity-20 cursor-pointer"
 						>
 							<span className="text-basic-800 font-medium text-md">{category}</span>

@@ -2,7 +2,7 @@ export const useMenuUtils = () => {
 	const scrollToCategory = (category: string) => {
 		// Find the category button and container for horizontal scroll
 		const categoryButton = document.getElementById(`${category}-button`);
-		const categoryContainer = document.querySelector('.category-list-container') as HTMLElement;
+		const categoryContainer = document.querySelector('.category-list-container');
 
 		if (categoryButton && categoryContainer) {
 			const offset = 50; // Offset for smooth positioning

@@ -15,7 +15,7 @@ export const useProductDetailsModel = () => {
 	// Hooks for navigation and store access
 	const { id } = useParams();
 	const navigate = useNavigate();
-	const location = useLocation();
+	const location = useLocation() as { pathname: string; state?: { product?: IBagItem } };
 	const { restaurant, isOpen }: IRestaurantStore = useRestaurantStore();
 	const { addItemToBag, updateItemInBag } = useBagStore();
 
@@ -30,7 +30,7 @@ export const useProductDetailsModel = () => {
 		if (isEditMode) {
 			return location.state?.product || null;
 		}
-		return restaurant?.menu.find((item) => item.id === Number(id)) || null;
+		return restaurant.menu.find((item) => item.id === Number(id)) || null;
 	}, [isEditMode, location.state, restaurant, id]);
 
 	// State variables
@@ -65,7 +65,7 @@ export const useProductDetailsModel = () => {
 
 	// Handles adding or updating an item in the bag
 	const handleBagAction = (isUpdate: boolean) => {
-		if (!product || product.id === undefined) {
+		if (product?.id === undefined) {
 			console.error('Product not found or invalid product ID:', id);
 			return;
 		}
@@ -79,10 +79,10 @@ export const useProductDetailsModel = () => {
 
 		if (isUpdate) {
 			updateItemInBag(item);
-			navigate(-1);
+			void navigate(-1);
 		} else {
 			addItemToBag(item);
-			navigate('/menu');
+			void navigate('/menu');
 		}
 	};
 
@@ -99,8 +99,12 @@ export const useProductDetailsModel = () => {
 		isOverflowing,
 		observation,
 		setObservation,
-		handleAddItemToBag: () => handleBagAction(false),
-		handleUpdateItemInBag: () => handleBagAction(true),
+		handleAddItemToBag: () => {
+			handleBagAction(false);
+		},
+		handleUpdateItemInBag: () => {
+			handleBagAction(true);
+		},
 		prevCounter,
 		handleCounterChange,
 	};

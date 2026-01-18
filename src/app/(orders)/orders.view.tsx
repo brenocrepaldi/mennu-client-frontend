@@ -11,6 +11,7 @@ type OrdersViewProps = ReturnType<typeof useOrdersModel>;
 
 export function OrdersView(props: OrdersViewProps) {
 	const {
+		restaurant,
 		hasOrders,
 		activeOrders,
 		historyOrders,
@@ -18,6 +19,9 @@ export function OrdersView(props: OrdersViewProps) {
 		navDirection,
 		handleSelectOrder,
 		handleBackToList,
+		showCancelModal,
+		handleCancelOrder,
+		setShowCancelModal,
 	} = props;
 
 	if (!hasOrders) return <NoOrder />;
@@ -28,10 +32,7 @@ export function OrdersView(props: OrdersViewProps) {
 				<div className="space-y-6">
 					{/* Status do pedido */}
 					<div className="bg-white rounded-2xl p-5 shadow-sm">
-						<OrderStatusTracker
-							status={selectedOrder.status}
-							createdAt={selectedOrder.createdAt}
-						/>
+						<OrderStatusTracker status={selectedOrder.status} createdAt={selectedOrder.createdAt} />
 					</div>
 					{/* Itens do pedido */}
 					<div className="bg-white rounded-2xl p-5 shadow-sm">
@@ -39,13 +40,19 @@ export function OrdersView(props: OrdersViewProps) {
 					</div>
 					{/* Informações de entrega e pagamento */}
 					<div className="bg-white rounded-2xl p-5 shadow-sm">
-						<OrderDetailsInfo order={selectedOrder} />
+						<OrderDetailsInfo
+							order={selectedOrder}
+							restaurant={restaurant}
+							showCancelModal={showCancelModal}
+							setShowCancelModal={setShowCancelModal}
+							handleCancelOrder={handleCancelOrder}
+						/>
 					</div>
 				</div>
 			);
 		} else {
 			return (
-				<div className='space-y-12'>
+				<div className="space-y-12">
 					{/* Orders in progress */}
 					{activeOrders.length > 0 && (
 						<div>
@@ -61,22 +68,22 @@ export function OrdersView(props: OrdersViewProps) {
 									<OrderCard
 										key={order.id}
 										order={order}
-										onClick={() => handleSelectOrder(order.id)}
+										onClick={() => { handleSelectOrder(order.id); }}
 									/>
 								))}
 							</div>
 						</div>
 					)}
 
-					<div className='w-full h-[1px] bg-basic-200 rounded-2xl'/>
+					<div className="w-full h-[1px] bg-basic-200 rounded-2xl" />
 
 					{/* Order history */}
-					<div className='spcece-y-6'>
+					<div className="spcece-y-6">
 						<div className="mb-4">
 							<h2 className="text-xl font-bold text-basic-800">Histórico</h2>
 							<p className="text-sm text-basic-600 mt-1">
 								{historyOrders.length > 0
-									? `${historyOrders.length} ${
+									? `${String(historyOrders.length)} ${
 											historyOrders.length === 1 ? 'pedido realizado' : 'pedidos realizados'
 									  }`
 									: 'Nenhum pedido anterior'}
@@ -88,7 +95,7 @@ export function OrdersView(props: OrdersViewProps) {
 									<OrderCard
 										key={order.id}
 										order={order}
-										onClick={() => handleSelectOrder(order.id)}
+										onClick={() => { handleSelectOrder(order.id); }}
 									/>
 								))}
 							</div>

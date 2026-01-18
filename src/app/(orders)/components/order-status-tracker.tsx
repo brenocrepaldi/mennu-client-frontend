@@ -66,21 +66,21 @@ export function OrderStatusTracker({ status, createdAt }: OrderStatusTrackerProp
 
 	const getTimeAgo = (minutes: number): string => {
 		if (minutes < 1) return 'agora mesmo';
-		if (minutes < 60) return `${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`;
+		if (minutes < 60) return `${String(minutes)} ${minutes === 1 ? 'minuto' : 'minutos'}`;
 		const hours = Math.floor(minutes / 60);
-		if (hours < 24) return `${hours} ${hours === 1 ? 'hora' : 'horas'}`;
+		if (hours < 24) return `${String(hours)} ${hours === 1 ? 'hora' : 'horas'}`;
 		const days = Math.floor(hours / 24);
-		if (days < 30) return `${days} ${days === 1 ? 'dia' : 'dias'}`;
+		if (days < 30) return `${String(days)} ${days === 1 ? 'dia' : 'dias'}`;
 		const months = Math.floor(days / 30);
-		if (months < 12) return `${months} ${months === 1 ? 'mês' : 'meses'}`;
+		if (months < 12) return `${String(months)} ${months === 1 ? 'mês' : 'meses'}`;
 		const years = Math.floor(months / 12);
-		return `${years} ${years === 1 ? 'ano' : 'anos'}`;
+		return `${String(years)} ${years === 1 ? 'ano' : 'anos'}`;
 	};
 
 	const formatDate = (date: Date): string => {
 		const day = date.getDate().toString().padStart(2, '0');
 		const month = (date.getMonth() + 1).toString().padStart(2, '0');
-		const year = date.getFullYear();
+		const year = date.getFullYear().toString();
 		const hours = date.getHours().toString().padStart(2, '0');
 		const minutes = date.getMinutes().toString().padStart(2, '0');
 
@@ -122,7 +122,7 @@ export function OrderStatusTracker({ status, createdAt }: OrderStatusTrackerProp
 						{status !== 'delivered' && (
 							<div className="flex items-center gap-1.5 mt-3 text-sm font-medium text-green-800">
 								<Clock size={16} strokeWidth={2.5} />
-								<span>Previsão: {restaurant?.delivery.estimatedTime || '30-45 min'}</span>
+								<span>Previsão: {restaurant.delivery.estimatedTime || '30-45 min'}</span>
 							</div>
 						)}
 					</div>

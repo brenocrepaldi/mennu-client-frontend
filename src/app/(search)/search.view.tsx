@@ -30,7 +30,7 @@ export function SearchView(props: SearchViewProps) {
 						value={searchText}
 						onChange={handleSearchChange}
 						maxLength={MAX_SEARCH_LENGTH}
-						onClick={() => setSearchMode(true)}
+						onClick={() => { setSearchMode(true); }}
 						className="w-full text-basic-800 font-medium placeholder:text-basic-400 placeholder:font-semibold placeholder:text-md outline-none bg-transparent"
 					/>
 					{searchMode && (
@@ -64,7 +64,7 @@ export function SearchView(props: SearchViewProps) {
 								{searchResults.map((product) => (
 									<div
 										key={product.id}
-										onClick={() => navigate(`/product/${product.id}`)}
+										onClick={() => void navigate(`/product/${String(product.id)}`)}
 										className="bg-white rounded-lg p-4 border border-basic-200 hover:border-basic-300 transition-all duration-200 active:opacity-70 cursor-pointer"
 									>
 										<div className="flex gap-3">
@@ -112,7 +112,7 @@ export function SearchView(props: SearchViewProps) {
 						{categories.map((category: string, index: number) => (
 							<button
 								key={index}
-								onClick={() => navigate(`/category/${category}`)}
+								onClick={() => void navigate(`/category/${category}`)}
 								className="bg-white rounded-full px-4 py-2 text-center border border-basic-200 hover:border-basic-300 transition-opacity duration-200 active:opacity-20 cursor-pointer"
 							>
 								<span className="text-basic-800 font-medium text-md">{category}</span>

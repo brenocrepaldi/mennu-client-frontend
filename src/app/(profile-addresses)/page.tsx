@@ -1,5 +1,5 @@
-import { useProfileAddressesModel } from './profile-addresses.model';
 import { ProfileAddressesView } from './profile-addresses.view';
+import { useProfileAddressesModel } from './profile-addresses.model';
 
 export function ProfileAddressesPage() {
 	const methods = useProfileAddressesModel();

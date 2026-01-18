@@ -18,13 +18,13 @@ export function OperatingHours({ restaurant, today }: OperatingHoursProps) {
 					<div
 						key={day}
 						className={`p-1 rounded-sm flex justify-between text-[0.9rem] text-basic-600 leading-none ${
-							day === today && 'bg-basic-100'
+							day === today ? 'bg-basic-100' : ''
 						}`}
 					>
-						<span className={`text-basic-500 ${day === today && 'text-basic-800'}`}>
+						<span className={day === today ? 'text-basic-800' : 'text-basic-500'}>
 							{day.charAt(0).toUpperCase() + day.slice(1, 3).toLowerCase()}
 						</span>
-						<span className={`text-basic-500 ${day === today && 'text-basic-800'}`}>
+						<span className={day === today ? 'text-basic-800' : 'text-basic-500'}>
 							{open && close ? `${open} - ${close}` : 'Closed'}
 						</span>
 					</div>

@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { JSX, useEffect, useState } from 'react';
+import { JSX, useMemo } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { BagStatus } from '../components/bag-status';
@@ -43,17 +43,16 @@ const routes: Record<string, { component: JSX.Element; up?: boolean }> = {
 	'/login/success': { component: <SuccessPage /> },
 	'/register': { component: <RegisterPage /> },
 	'/register/success': { component: <SuccessPage /> },
+	'/order/success': { component: <SuccessPage /> },
 };
 
 export function AppRoutes() {
 	const location = useLocation();
-	const [showFooterComponents, setShowFooterComponents] = useState(true);
-
-	useEffect(() => {
+	
+	const showFooterComponents = useMemo(() => {
 		const routesWithFooter = ['/menu', '/search', '/orders', '/profile'];
-
-		setShowFooterComponents(routesWithFooter.includes(location.pathname));
-	}, [location]);
+		return routesWithFooter.includes(location.pathname);
+	}, [location.pathname]);
 
 	return (
 		<>

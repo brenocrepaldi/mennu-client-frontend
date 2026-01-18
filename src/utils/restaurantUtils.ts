@@ -1,4 +1,5 @@
-import { IOperatingHours, IProduct } from '../types/restaurant';
+import { IOperatingHours, IPaymentMethodOption, IProduct } from '../types/restaurant';
+import { CreditCard, Wallet, Banknote } from 'lucide-react';
 
 /**
  * Determines if a restaurant is currently open based on its operating hours.
@@ -15,7 +16,7 @@ export const isRestaurantOpen = (operatingHours: IOperatingHours[]): boolean => 
 	const todaySchedule = operatingHours.find((day) => day.day === dayOfWeek);
 
 	// If there is no schedule for today or it's closed, return false
-	if (!todaySchedule || todaySchedule.open === null || todaySchedule.close === null) {
+	if (!todaySchedule?.close || !todaySchedule.open) {
 		return false;
 	}
 
@@ -30,7 +31,7 @@ export const isRestaurantOpen = (operatingHours: IOperatingHours[]): boolean => 
 
 	// Convert opening and closing times
 	const openTime = timeToMinutes(todaySchedule.open);
-	let closeTime = timeToMinutes(todaySchedule.close);
+	let closeTime = timeToMinutes(todaySchedule.close || '00:00');
 
 	// If closing time is "00:00", treat it as the end of the day
 	if (todaySchedule.close === '00:00') {
@@ -47,16 +48,10 @@ export const isRestaurantOpen = (operatingHours: IOperatingHours[]): boolean => 
  * @returns {Record<string, IProduct[]>} - Object with categories as keys and arrays of products as values.
  */
 export function categorizeItems(menu: IProduct[]) {
-	return menu.reduce((acc, item) => {
-		// Initialize category if it doesn't exist
-		if (!acc[item.category]) {
-			acc[item.category] = [];
-		}
-
-		// Add product to the corresponding category
-		acc[item.category].push(item);
+	return menu.reduce<Record<string, IProduct[]>>((acc, item) => {
+		(acc[item.category] ??= []).push(item);
 		return acc;
-	}, {} as Record<string, IProduct[]>);
+	}, {});
 }
 
 /**
@@ -69,3 +64,13 @@ export function getAllCategories(menu: IProduct[]): string[] {
 	menu.forEach((item) => categories.add(item.category));
 	return Array.from(categories);
 }
+
+/**
+ * List of payment method options with their labels and icons.
+ */
+export const paymentMethodOptions: IPaymentMethodOption[] = [
+	{ id: 'credit-card', label: 'Crédito', icon: CreditCard },
+	{ id: 'debit-card', label: 'Débito', icon: CreditCard },
+	{ id: 'pix', label: 'PIX', icon: Wallet },
+	{ id: 'cash', label: 'Dinheiro', icon: Banknote },
+];

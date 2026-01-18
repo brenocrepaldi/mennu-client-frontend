@@ -22,7 +22,7 @@ export function RegisterView(props: RegisterViewProps) {
 			<div className="w-full bg-secondary flex flex-col items-center gap-6 px-4 py-6 text-center shadow-bottom">
 				<ArrowLeft
 					className="size-6 text-basic-800 absolute left-3 top-3"
-					onClick={() => navigate(-1)}
+					onClick={() => void navigate(-1)}
 				/>
 				<img
 					src={restaurant.logo}
@@ -36,7 +36,7 @@ export function RegisterView(props: RegisterViewProps) {
 					</span>
 				</div>
 
-				<form className="w-full flex flex-col gap-4" onSubmit={handleResgistration}>
+				<form className="w-full flex flex-col gap-4" onSubmit={() => handleResgistration}>
 					<Input
 						placeholder="Como você será chamado"
 						inputValue={registerForm.name}

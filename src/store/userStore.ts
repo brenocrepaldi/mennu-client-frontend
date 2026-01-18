@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { IUser } from '../types/user';
-import { user as mockUser } from '../mocks/user';
+import { user } from '../mocks/user';
 
 // Define the Zustand store interface
 export interface IUserStore {
 	user: IUser | null;
 	isAuthenticated: boolean;
-	saveMockUser: (mockUserData: IUser) => void;
-	loadMockUser: () => void;
+	saveUser: (userData: IUser) => void;
+	loadUser: () => void;
 	clearUser: () => void;
 }
 
@@ -18,14 +18,14 @@ export const useUserStore = create<IUserStore>()(
 			user: null, // Initial state with no user
 			isAuthenticated: false,
 
-			saveMockUser: (mockUserData) => {
+			saveUser: (userData) => {
 				// Function to save user data to the store
-				set({ user: mockUserData, isAuthenticated: true });
+				set({ user: userData, isAuthenticated: true });
 			},
 
-			loadMockUser: () => {
-				// Load mock user automatically
-				set({ user: mockUser, isAuthenticated: true });
+			loadUser: () => {
+				// Load user automatically
+				set({ user: user, isAuthenticated: true });
 			},
 
 			clearUser: () => {

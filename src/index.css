@@ -6,7 +6,8 @@ body {
 }
 
 @theme {
-	--color-app: oklch(0.577 0.245 27.325); /* tailwindcss red-600 */
+	/* --color-app: oklch(0.577 0.245 27.325); tailwindcss red-600 */
+	--color-app: #910201; /* Kintal Lanches */
 	--color-primary: #f4f5f7;
 	--color-secondary: #ffffff;
 
@@ -69,4 +70,12 @@ body {
 
 .animate-slide-up {
 	animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@supports (-webkit-touch-callout: none) {
+	input,
+	text-area,
+	select {
+		font-size: 16px;
+	}
 }

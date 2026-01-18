@@ -3,15 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { useBagStore } from '../../store/bagStore';
 import { useRestaurantStore } from '../../store/restaurantStore';
 import { useOrdersStore } from '@/store/ordersStore';
+import { useAddressesStore } from '@/store/addressesStore';
 import { useMockUser } from '../../hooks/useMockUser';
-import { mockAddresses } from '../../mocks/user';
-import { IOrder, PaymentMethod } from '@/types/order';
+import { IOrder } from '@/types/order';
 import { toast } from 'sonner';
 
 export const useBagModel = () => {
 	const navigate = useNavigate();
 	const { restaurant } = useRestaurantStore();
 	const { user } = useMockUser();
+	const { addresses } = useAddressesStore();
 	const {
 		bag,
 		totalPrice,
@@ -23,7 +24,7 @@ export const useBagModel = () => {
 		clearBag,
 	} = useBagStore();
 
-	const [selectedAddressId, setSelectedAddressId] = useState<number>(mockAddresses[0]?.id || 1);
+	const [selectedAddressId, setSelectedAddressId] = useState<number>(addresses[0]?.id || 1);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -53,46 +54,46 @@ export const useBagModel = () => {
 				setCurrentStep('confirm-address');
 				return;
 			}
-			navigate(-1);
+			void navigate(-1);
 		}, 0);
 	};
 
 	const { addOrder } = useOrdersStore();
 
-	const handleConfirmOrder = (paymentMethod: string, changeFor?: number, discount: number = 0) => {
-		const selectedAddress = mockAddresses.find((addr) => addr.id === selectedAddressId);
+	const handleConfirmOrder = (paymentMethod: string, changeFor?: number, discount = 0) => {
+		const selectedAddress = addresses.find((addr) => addr.id === selectedAddressId);
 
 		if (!selectedAddress) {
 			toast.error('Endereço não encontrado');
 			return;
 		}
 
-		const deliveryFee = restaurant?.delivery.fee || 0;
+		const deliveryFee = restaurant.delivery.fee || 0;
 
 		// Criar o pedido
 		const newOrder: IOrder = {
 			id: String(Date.now()),
-			orderNumber: `#${Math.floor(1000 + Math.random() * 9000)}`,
+			orderNumber: `#${String(Math.floor(1000 + Math.random() * 9000))}`,
 			items: bag.map((item) => ({ ...item })),
 			status: 'pending',
 			subtotal: totalPrice,
 			discount: discount,
 			total: totalPrice + deliveryFee - discount,
-			paymentMethod: paymentMethod as PaymentMethod,
+			paymentMethod: paymentMethod,
 			changeFor: changeFor,
 			deliveryAddress: selectedAddress,
 			createdAt: new Date(),
 			updatedAt: new Date(),
 			restaurant: {
-				name: restaurant?.name || 'Restaurante',
-				image: restaurant?.logo || '/assets/logo-restaurante.png',
+				name: restaurant.name || 'Restaurante',
+				image: restaurant.logo || '/assets/logo-restaurante.png',
 			},
 		};
 
 		addOrder(newOrder);
 		toast.success('Pedido confirmado!');
 		clearBag();
-		navigate('/orders');
+		void navigate('/order/success');
 	};
 
 	const showFooter = currentStep !== 'checkout';
@@ -112,7 +113,7 @@ export const useBagModel = () => {
 		handleOnBack,
 		currentStep,
 		handleStepChange,
-		mockAddresses,
+		addresses,
 		selectedAddressId,
 		setSelectedAddressId,
 		handleConfirmOrder,

@@ -18,7 +18,7 @@ export function BagHeader({ navigate, restaurant }: BagHeaderProps) {
 				<div className="space-x-1 font-bold text-basic-800">
 					{[restaurant.name, restaurant.address.city].join(' - ')}
 				</div>
-				<div onClick={() => navigate('/menu')}>
+				<div onClick={() => void navigate('/menu')}>
 					<span className="font-semibold text-sm text-app">
 						Adicionar mais itens
 					</span>

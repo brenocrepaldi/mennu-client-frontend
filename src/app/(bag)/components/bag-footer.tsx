@@ -30,7 +30,7 @@ export function BagFooter({
 						</div>
 					</div>
 					<div className="flex flex-col">
-						<span className="text-basic-500 text-xs font-[500]">
+						<span className="text-basic-500 text-xs font-medium">
 							Total com a entrega
 						</span>
 						<div className="flex gap-1">
@@ -41,7 +41,7 @@ export function BagFooter({
 					</div>
 				</div>
 				<button
-					onClick={() => handleStepChange()}
+					onClick={() => { handleStepChange(); }}
 					className="bg-app px-10 py-2 rounded-lg transition-opacity duration-200 active:opacity-50 cursor-pointer"
 				>
 					<span className="text-sm font-bold text-basic-50">{buttonText}</span>

@@ -4,15 +4,15 @@ import { toast } from 'sonner';
 import { useRestaurantStore } from '../../store/restaurantStore';
 import { useRegexValidations } from '../../utils/regexValidations';
 
-type LoginForm = {
+interface LoginForm {
 	email: string;
 	password: string;
-};
+}
 
-type LoginFormValidity = {
+interface LoginFormValidity {
 	isEmailValid: boolean;
 	isPasswordValid: boolean;
-};
+}
 
 export const useLoginModel = () => {
 	const navigate = useNavigate();
@@ -70,7 +70,7 @@ export const useLoginModel = () => {
 			toast.error('Erro de conexão. Verifique sua internet e tente novamente');
 		} finally {
 			setIsLoading(false);
-			navigate('/login/success');
+			void navigate('/login/success');
 		}
 	}
 

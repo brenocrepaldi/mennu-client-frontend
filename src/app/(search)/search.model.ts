@@ -17,7 +17,6 @@ export const useSearchModel = () => {
 
 	const [searchText, setSearchText] = useState<string>('');
 	const [debouncedSearchText, setDebouncedSearchText] = useState<string>('');
-	const [isSearching, setIsSearching] = useState(false);
 
 	// Debounce search text
 	useEffect(() => {
@@ -25,8 +24,11 @@ export const useSearchModel = () => {
 			setDebouncedSearchText(searchText);
 		}, DEBOUNCE_DELAY);
 
-		return () => clearTimeout(timer);
+		return () => { clearTimeout(timer); };
 	}, [searchText]);
+
+	// Derived state - no useEffect needed
+	const isSearching = searchText !== debouncedSearchText;
 
 	// Memoized search results
 	const searchResults = useMemo(() => {
@@ -35,10 +37,6 @@ export const useSearchModel = () => {
 		}
 		return searchProducts(debouncedSearchText, restaurant);
 	}, [debouncedSearchText, restaurant, searchProducts]);
-
-	useEffect(() => {
-		setIsSearching(searchText !== debouncedSearchText);
-	}, [searchResults, searchText, debouncedSearchText]);
 
 	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(e.target.value);

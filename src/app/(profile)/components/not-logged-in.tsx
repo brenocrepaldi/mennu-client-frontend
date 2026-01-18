@@ -36,7 +36,7 @@ export function NotLoggedIn({ restaurant, navigate, GoogleSvg }: NotLoggedProps)
 					{/* Email Login Button */}
 					<button
 						className="w-full bg-app font-medium px-6 py-3 rounded-lg hover:opacity-90 transition-opacity duration-200 active:opacity-70 flex items-center justify-center gap-3 cursor-pointer"
-						onClick={() => navigate('/login')}
+						onClick={() => void navigate('/login')}
 					>
 						<Mail className="text-secondary size-5 stroke-2" />
 						<span className="text-secondary font-bold flex-1">Continuar com e-mail</span>

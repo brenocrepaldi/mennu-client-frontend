@@ -92,7 +92,7 @@ export function OrderCard({ order, onClick }: OrderCardProps) {
 				{order.status !== 'delivered' && order.status !== 'cancelled' && (
 					<div className="flex items-center gap-1.5 text-[13px] font-semibold text-green-700 bg-green-50 px-3 py-1.5 rounded-full">
 						<Clock size={14} className="flex-shrink-0" />
-						<span className="whitespace-nowrap">{restaurant?.delivery.estimatedTime || '30-45 min'}</span>
+						<span className="whitespace-nowrap">{restaurant.delivery.estimatedTime || '30-45 min'}</span>
 					</div>
 				)}
 			</div>

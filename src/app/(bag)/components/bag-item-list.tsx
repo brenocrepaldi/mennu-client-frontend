@@ -31,7 +31,7 @@ export function BagItemList({
 				<div
 					onClick={() => {
 						clearBag();
-						navigate('/menu');
+						void navigate('/menu');
 						toast.success('Sua sacola está vazia.');
 					}}
 				>
@@ -63,7 +63,7 @@ export function BagItemList({
 					))}
 				</AnimatePresence>
 			</ul>
-			<div className="w-full text-center pb-12" onClick={() => navigate('/menu')}>
+			<div className="w-full text-center pb-12" onClick={() => void navigate('/menu')}>
 				<span className="font-semibold text-sm text-app">Adicionar mais itens</span>
 			</div>
 		</div>
